@@ -79,7 +79,7 @@ const GlobalStyle = createGlobalStyle`
 
   .link.last {
     background-color: ${({ theme }) => theme.colors.primary};
-    margin-top: 12px;;
+    margin-top: 12px;
 
     :hover {
       background-color: ${({ theme }) => shade(0.15, theme.colors.primary)};
