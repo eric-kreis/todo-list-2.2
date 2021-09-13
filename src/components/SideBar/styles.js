@@ -15,6 +15,10 @@ const SideBarS = styled.div`
     :hover {
       cursor: default;
     }
+
+    @media(max-width: 400px) {
+      top: 58px;
+    }
   }
 
   aside {
