@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { useAuth } from '../../Contexts/AuthContext';
@@ -110,6 +110,10 @@ export default function Signup() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    document.title = 'Cadastre-se';
+  }, []);
+
   if (currentUser) {
     saveLogin(emailValue);
 
@@ -126,7 +130,6 @@ export default function Signup() {
 
     return <Redirect to="/" />;
   }
-
   return (
     <AuthBodyS>
       <AuthContainerS>

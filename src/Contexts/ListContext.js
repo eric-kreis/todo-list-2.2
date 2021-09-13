@@ -20,44 +20,39 @@ export default function ListProvider({ children }) {
   const [tasks, setTasks] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       if (currentUser) {
-        try {
-          setLoading(true);
-          const doc = await database.userData.doc(currentUser.uid).get();
-          setLoading(false);
-          if (doc.exists) {
-            const userData = doc.data();
-            setTasks(userData.tasks || []);
-            setCheckedItems(userData.checkedItems || []);
-          } else {
-            setTasks([]);
-            setCheckedItems([]);
-          }
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log(error);
+        setLoading(true);
+        const doc = await database.userData.doc(currentUser.uid).get();
+        if (doc.exists) {
+          const userData = doc.data();
+          setTasks(userData.tasks || []);
+          setCheckedItems(userData.checkedItems || []);
+        } else {
+          setTasks([]);
+          setCheckedItems([]);
         }
       } else {
         setTasks([]);
         setCheckedItems([]);
       }
+      setLoading(false);
     })();
   }, [currentUser]);
 
   // State observer;
   useEffect(() => {
-    if (currentUser && tasks.length > 0) {
+    if (currentUser && !loading) {
       database.userData.doc(currentUser.uid).set({
         tasks,
         checkedItems,
         lastModification: database.getCurrentTimestamp(),
       });
     }
-  }, [checkedItems, currentUser, tasks]);
+  }, [checkedItems, currentUser, loading, tasks]);
 
   const changeDisplay = ({ target: { value } }) => {
     setDisplay(value);

@@ -10,10 +10,14 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  :root {
+    --vh: ${window.innerHeight * 0.01}px
+  }
+
   body {
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
-    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     min-width: 100vw;
     position: ${({ active }) => (active ? 'fixed' : 'relative')};
 

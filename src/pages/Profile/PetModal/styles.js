@@ -6,29 +6,29 @@ const PetModalS = styled.section`
   border-radius: 3px;
   color: ${({ theme }) => theme.colors.text};
   margin: auto;
-  max-width: 45%;
+  max-width: 40%;
   min-width: 30%;
   text-align: center;
-  padding: 32px;
 
   .return-btn {
     background-color: whitesmoke;
     border: 0;
     border-radius: 3px;
     color: ${({ theme }) => theme.colors.input};
-    margin-top: 32px;
+    margin: 32px auto;
     padding: 8px 0;
+    width: 80%;
 
     :hover {
-      background-color: ${shade(0.2, 'whitesmoke')};
+      background-color: ${shade(0.08, 'whitesmoke')};
     }
   }
 
   .pet-section {
-    justify-content: space-evenly;
-    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
   }
 
   .select-section {
@@ -36,6 +36,7 @@ const PetModalS = styled.section`
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin: 32px 32px 0;
   }
 
   .select-btn {
@@ -46,7 +47,7 @@ const PetModalS = styled.section`
     button {
       align-items: center;
       display: flex;
-      background-color: transparent;
+      background-color: ${({ theme }) => shade(0.08, theme.colors.primary)};
       border: 0;
       border-radius: 50%;
       height: 150px;
@@ -76,6 +77,7 @@ const PetModalS = styled.section`
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
+    margin: 32px 32px 0;
 
     li {
       list-style-type: none
@@ -101,17 +103,17 @@ const PetModalS = styled.section`
       }
 
       @media(max-width: 390px) {
-        height: 60px;
-        width: 60px;
+        height: 50px;
+        width: 50px;
       }
     }
   }
 
-  @media(max-width: 1024px) {
-    max-width: 70%;
+  @media(max-width: 1200px) {
+    max-width: 60%;
   }
 
-  @media(max-width: 768px) {
+  @media(max-width: 780px) {
     max-width: 75%;
   }
 
@@ -129,7 +131,6 @@ const PetModalS = styled.section`
     margin: 0 auto;
     max-width: 100%;
     min-width: 100%;
-    padding: 16px;
   }
 `;
 

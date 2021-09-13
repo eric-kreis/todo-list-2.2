@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer, Flip } from 'react-toastify';
 
 import ClearModalContainer from './HomeModals/ClearModalContainer';
@@ -21,6 +21,11 @@ export default function HomePage() {
   };
 
   const { clearModal } = modals;
+
+  useEffect(() => {
+    document.title = 'Lista';
+  }, []);
+
   return (
     <div>
       <ToastContainer transition={Flip} />

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { useAuth } from '../../Contexts/AuthContext';
@@ -82,6 +82,10 @@ export default function Login() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    document.title = 'Entrar';
+  }, []);
 
   if (currentUser) {
     saveLogin(email);

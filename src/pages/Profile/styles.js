@@ -5,7 +5,7 @@ import { shade } from 'polished';
 const ProfileBodyS = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
   display: flex;
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
 
   .profile-container {
     background-color: whitesmoke;
