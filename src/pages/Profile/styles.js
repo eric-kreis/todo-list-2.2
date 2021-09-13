@@ -42,7 +42,7 @@ const ProfileBodyS = styled.div`
       border-radius: 0;
       box-shadow: none;
       height: 100vh;
-      max-height: 100vh;
+      max-height: calc(var(--vh, 1vh) * 100);
       width: 100%;
     }
   }
