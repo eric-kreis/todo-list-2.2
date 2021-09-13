@@ -29,9 +29,9 @@ export const HomeMainS = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: calc(100vh - 48px);
+  min-height: calc(calc(var(--vh, 1vh) * 100) - 48px);
 
   @media(max-width: 375px) {
-    min-height: calc(100vh - 54px);
+    min-height: calc(calc(var(--vh, 1vh) * 100) - 54px);
   }
 `;

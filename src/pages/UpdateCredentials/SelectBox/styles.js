@@ -12,7 +12,7 @@ const SelectBoxS = styled.div`
     border: 0;
     border-radius: 3px;
     box-shadow: ${({ theme }) => transparentize(0.5, theme.colors.primary)} 0px 0px 5px 0px, ${({ theme }) => transparentize(0.5, theme.colors.primary)} 0px 0px 1px 0px;
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.input};
     height: 45px;
     width: 100%;
     margin-right: 8px;

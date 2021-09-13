@@ -5,7 +5,7 @@ const SideBarS = styled.div`
   .null-container {
     background-color: ${({ theme }) => transparentize(0.3, theme.modal.windowBackground)};
     border: 0;
-    height: calc(100vh - 48px);
+    height: calc(calc(var(--vh, 1vh) * 100) - 48px);
     left: 0;
     position: absolute;
     top: 48px;
@@ -26,7 +26,7 @@ const SideBarS = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100vh - 48px);
+    height: calc(calc(var(--vh, 1vh) * 100) - 48px);
     left: ${({ active }) => (active ? 0 : '-200px')};
     padding-top: 8px;
     position: absolute;
