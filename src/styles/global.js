@@ -10,10 +10,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  :root {
-    --vh: ${window.innerHeight * 0.01}px
-  }
-
   body {
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
