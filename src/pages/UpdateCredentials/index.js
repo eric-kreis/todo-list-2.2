@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
@@ -167,6 +167,10 @@ export default function UpdateCredentials() {
   };
 
   const handleChangeView = ({ target: { value } }) => setView(value);
+
+  useEffect(() => {
+    document.title = 'Alterar credenciais';
+  }, []);
 
   return (
     <AuthBodyS>

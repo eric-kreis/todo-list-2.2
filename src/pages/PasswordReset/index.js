@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ResetLoading from '../../assets/loadingComponents/ResetLoading';
 import AuthHeader from '../../components/AuthHeader';
@@ -60,6 +60,10 @@ export default function PasswordReset() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    document.title = 'Recuperar senha';
+  }, []);
 
   return (
     <AuthBodyS>

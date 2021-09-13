@@ -15,10 +15,15 @@ export default function PetModal({
   handleSelectPet,
   setOpenPetModal,
 }) {
+  const images = {
+    dog: dogs,
+    cat: cats,
+  };
+
   return (
     <ModalWindowS>
       <PetModalS>
-        { pets && pets.length < 1 ? (
+        { !pets ? (
           <div className="select-section">
             <div className="select-btn">
               <button type="button" value="cat" onClick={() => handleChangePet('cat')}>
@@ -35,7 +40,7 @@ export default function PetModal({
         ) : (
           <div className="pet-section">
             <ul>
-              { pets.map((img) => (
+              { images[pets].map((img) => (
                 <li key={uuidv4()}>
                   <button type="button" src={img} onClick={() => handleSelectPet(img)}>
                     <img src={img} alt="Pet" />
@@ -43,7 +48,7 @@ export default function PetModal({
                 </li>
               )) }
             </ul>
-            <button type="button" onClick={() => setPets([])} className="return-btn">
+            <button type="button" onClick={() => setPets('')} className="return-btn">
               Voltar
             </button>
           </div>
@@ -53,12 +58,8 @@ export default function PetModal({
   );
 }
 
-PetModal.defaultProps = {
-  pets: [],
-};
-
 PetModal.propTypes = {
-  pets: PropTypes.arrayOf(PropTypes.string),
+  pets: PropTypes.string.isRequired,
   setPets: PropTypes.func.isRequired,
   handleChangePet: PropTypes.func.isRequired,
   handleSelectPet: PropTypes.func.isRequired,

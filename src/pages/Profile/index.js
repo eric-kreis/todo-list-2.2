@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
@@ -13,8 +13,7 @@ import ProfileBodyS, { ModalSectionS } from './styles';
 import EmailsContainer from './EmailsContainer';
 import PhotoSettings from './PhotoSettings';
 import { Logout } from '../../assets/icons';
-import dogs from '../../assets/dogs';
-import cats from '../../assets/cats';
+
 import PetModal from './PetModal';
 
 export default function Profile() {
@@ -30,7 +29,7 @@ export default function Profile() {
 
   const { title } = useContext(ThemeContext);
 
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState('');
 
   const [openDefaultModal, setOpenDefaultModal] = useState('');
   const [openPetModal, setOpenPetModal] = useState(false);
@@ -90,13 +89,8 @@ export default function Profile() {
     }
   };
 
-  const handleChangePet = (value) => {
-    const images = {
-      dog: dogs,
-      cat: cats,
-    };
-
-    setPets(images[value]);
+  const handleChangePet = (pet) => {
+    setPets(pet);
   };
 
   const handleSelectPet = async (img) => {
@@ -113,7 +107,7 @@ export default function Profile() {
     setPrevImg(img);
     setCustomImg(myFile);
     setOpenDefaultModal('send');
-    setPets([]);
+    setPets('');
   };
 
   const handleModalClick = () => {
@@ -128,6 +122,10 @@ export default function Profile() {
       toastId: 'error-toast',
     });
   }
+
+  useEffect(() => {
+    document.title = 'Perfil';
+  }, []);
 
   return (
     <ProfileBodyS>
