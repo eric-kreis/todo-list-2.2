@@ -59,7 +59,7 @@ export default function Profile() {
         name: customImg.name,
       };
       const spacelessName = customImg.name.split(' ').join('');
-
+      setError('');
       try {
         await toast.promise(
           storage

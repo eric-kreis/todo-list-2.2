@@ -33,6 +33,7 @@ export default function PhotoProvider({ children }) {
     (async () => {
       if (currentUser) {
         try {
+          setError('');
           setLoading(true);
           const doc = await database.users.doc(currentUser.uid).get();
           if (doc.exists && doc.data().imagePath !== '/') {
@@ -77,6 +78,7 @@ export default function PhotoProvider({ children }) {
     (async () => {
       if (currentUser) {
         try {
+          setError('');
           const doc = await database.users.doc(currentUser.uid).get();
           if (doc.exists && doc.data().imagePath !== path) {
             await database.users.doc(currentUser.uid).update({ imagePath: path });
