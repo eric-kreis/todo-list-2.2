@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 const ItemS = styled.li`
+  align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.text};
   display: flex;
-  align-items: center;
-  width: 100%;
+  min-height: 70px;
   overflow-x: hidden;
-  padding: 18px 0 18px 4px;
+  padding-left: 4px;
+  width: 100%;
 
   ::-webkit-scrollbar {
     display: none;
