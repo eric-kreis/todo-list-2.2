@@ -46,7 +46,7 @@ export default function PasswordReset() {
         setError('');
         setSuccess('');
         await resetPassword(email);
-        setSuccess('Email enviado com sucesso');
+        setSuccess('* Email enviado, verifique sua caixa de entrada!');
       } catch (resetError) {
         switch (resetError.code) {
           case 'auth/user-not-found':
