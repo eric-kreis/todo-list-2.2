@@ -68,6 +68,9 @@ export default function ListProvider({ children }) {
     setTasks((prevTasks) => (
       prevTasks.filter(({ id: taskId }) => taskId !== id)
     ));
+    setCheckedItems((prevChecks) => (
+      prevChecks.filter((checkedId) => checkedId !== id)
+    ));
   };
 
   const toggleCheck = ({ target: { value, checked } }) => {
