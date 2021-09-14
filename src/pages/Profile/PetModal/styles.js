@@ -77,14 +77,14 @@ const PetModalS = styled.section`
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
-    margin: 32px 32px 0;
+    margin: 32px 16px 0;
 
     li {
       list-style-type: none
     }
 
     button {
-      background-color: transparent;
+      background-color: ${({ theme }) => shade(0.08, theme.colors.primary)};
       border: 0;
       border-radius: 50%;
       height: 70px;
@@ -98,13 +98,23 @@ const PetModalS = styled.section`
       }
 
       @media(max-width: 640px) {
+        height: 60px;
+        width: 60px;
+      }
+
+      @media(max-width: 540px) {
         height: 50px;
         width: 50px;
       }
 
-      @media(max-width: 390px) {
-        height: 50px;
-        width: 50px;
+      @media(max-width: 420px) {
+        height: 70px;
+        width: 70px;
+      }
+
+      @media(max-width: 380px) {
+        height: 70px;
+        width: 70px;
       }
     }
   }
@@ -113,7 +123,7 @@ const PetModalS = styled.section`
     max-width: 60%;
   }
 
-  @media(max-width: 780px) {
+  @media(max-width: 790px) {
     max-width: 75%;
   }
 
@@ -121,11 +131,7 @@ const PetModalS = styled.section`
     max-width: 80%;
   }
 
-  @media(max-width: 460px) {
-    margin: 64px auto;
-  }
-
-  @media(max-width: 390px) {
+  @media(max-width: 420px) {
     border-radius: 0;
     height: 100vh;
     margin: 0 auto;

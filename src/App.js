@@ -15,9 +15,11 @@ export default function App() {
   const theme = useSelector(({ changeTheme }) => changeTheme.theme);
   const active = useSelector(({ sideBar }) => sideBar.active);
 
+  const vh = () => window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh()}px`);
+
   window.addEventListener('resize', () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    document.documentElement.style.setProperty('--vh', `${vh()}px`);
   });
 
   return (

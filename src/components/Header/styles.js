@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled from 'styled-components';
 
 const PageHeaderS = styled.header`
@@ -37,10 +38,11 @@ const PageHeaderS = styled.header`
   }
 
   .image-container {
+    background-color: ${({ theme }) => shade(0.08, theme.colors.primary)};
     border-radius: 50%;
-    height: 28px;
+    height: 30px;
     overflow: hidden;
-    width: 28px;
+    width: 30px;
 
     img {
       height: 100%;

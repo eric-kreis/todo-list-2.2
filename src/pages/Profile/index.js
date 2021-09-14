@@ -11,7 +11,7 @@ import ModalWindowS from '../../styles/ModalWindowS';
 import ProfileBodyS, { ModalSectionS } from './styles';
 
 import EmailsContainer from './EmailsContainer';
-import PhotoSettings from './PhotoSettings';
+import Settings from './Settings';
 import { Logout } from '../../assets/icons';
 
 import PetModal from './PetModal';
@@ -155,7 +155,7 @@ export default function Profile() {
         />
       ) }
       <section className="profile-container">
-        <PhotoSettings
+        <Settings
           handleChangeFile={handleChangeFile}
           setOpenDefaultModal={setOpenDefaultModal}
           setOpenPetModal={setOpenPetModal}

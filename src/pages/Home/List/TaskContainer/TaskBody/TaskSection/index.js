@@ -5,7 +5,7 @@ import { useList } from '../../../../../../Contexts/ListContext';
 import TaskLabelS from './styles';
 
 export default function TaskSection({ id, children }) {
-  const { checkedItems, toggleAndSavingChecked } = useList();
+  const { checkedItems, toggleCheck } = useList();
 
   const check = useRef(null);
 
@@ -21,7 +21,7 @@ export default function TaskSection({ id, children }) {
         ref={check}
         type="checkbox"
         value={id}
-        onChange={toggleAndSavingChecked}
+        onChange={toggleCheck}
       />
       <span>{ children }</span>
     </TaskLabelS>
