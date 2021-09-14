@@ -25,7 +25,6 @@ export default function ListProvider({ children }) {
   useEffect(() => {
     (async () => {
       if (currentUser) {
-        setLoading(true);
         const doc = await database.userData.doc(currentUser.uid).get();
         if (doc.exists) {
           const userData = doc.data();
@@ -35,16 +34,17 @@ export default function ListProvider({ children }) {
           setTasks([]);
           setCheckedItems([]);
         }
+        setLoading(false);
       } else {
         setTasks([]);
         setCheckedItems([]);
+        setLoading(true);
       }
-      setLoading(false);
     })();
   }, [currentUser]);
 
-  // State observer;
   useEffect(() => {
+    // DataBase saver;
     if (currentUser && !loading) {
       database.userData.doc(currentUser.uid).set({
         tasks,
@@ -58,37 +58,51 @@ export default function ListProvider({ children }) {
     setDisplay(value);
   };
 
-  const addAndSaveToDo = (text) => {
-    setTasks((prevTasks) => [...prevTasks, { id: v4(), text }]);
+  const addToDo = (text) => {
+    setTasks((prevTasks) => (
+      [...prevTasks, { id: v4(), text }]
+    ));
   };
 
-  const removeAndSaveToDo = (id) => {
-    setTasks((prevTasks) => prevTasks.filter(({ id: taskId }) => taskId !== id));
+  const removeToDo = (id) => {
+    setTasks((prevTasks) => (
+      prevTasks.filter(({ id: taskId }) => taskId !== id)
+    ));
   };
 
-  const toggleAndSavingChecked = ({ target: { value, checked } }) => {
+  const toggleCheck = ({ target: { value, checked } }) => {
     if (checked) {
-      setCheckedItems((prevChecks) => [...prevChecks, value]);
+      setCheckedItems((prevChecks) => (
+        [...prevChecks, value]
+      ));
     } else {
-      setCheckedItems(checkedItems.filter((id) => id !== value));
+      setCheckedItems((prevChecks) => (
+        prevChecks.filter((id) => id !== value)
+      ));
     }
   };
 
-  const editingTasks = (taskText, taskId) => {
+  const editTask = (taskText, taskId) => {
     if (taskText.trim()) {
-      setTasks((prevTasks) => prevTasks.map(({ id, text }) => {
-        if (id === taskId) return { id, text: taskText };
-        return { id, text };
-      }));
+      setTasks((prevTasks) => (
+        prevTasks.map(({ id, text }) => {
+          if (id === taskId) return { id, text: taskText };
+          return { id, text };
+        })
+      ));
     }
   };
 
   const clearToDo = () => {
-    setTasks((prevTasks) => prevTasks.filter(({ id }) => checkedItems.includes(id)));
+    setTasks((prevTasks) => (
+      prevTasks.filter(({ id }) => checkedItems.includes(id))
+    ));
   };
 
   const clearDone = () => {
-    setTasks((prevTasks) => prevTasks.filter(({ id }) => !checkedItems.includes(id)));
+    setTasks((prevTasks) => (
+      prevTasks.filter(({ id }) => !checkedItems.includes(id))
+    ));
     setCheckedItems([]);
   };
 
@@ -103,10 +117,10 @@ export default function ListProvider({ children }) {
     checkedItems,
     loading,
     changeDisplay,
-    addAndSaveToDo,
-    removeAndSaveToDo,
-    toggleAndSavingChecked,
-    editingTasks,
+    addToDo,
+    removeToDo,
+    toggleCheck,
+    editTask,
     clearToDo,
     clearDone,
     clearAll,

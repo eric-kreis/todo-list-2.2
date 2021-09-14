@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import ConfirmModal from './ConfirmModal';
@@ -14,19 +14,17 @@ export default function ClearModalContainer({ clearModal, handleToggleModal }) {
     clearDone,
   } = useList();
 
-  const handleClearAll = useCallback(() => clearAll(), [clearAll]);
-  const handleClearToDo = useCallback(() => clearToDo(), [clearToDo]);
-  const handleClearDone = useCallback(() => clearDone(), [clearDone]);
-
   const handleClear = () => {
     if (display === 'toDo') {
-      handleClearToDo();
+      clearToDo();
     } else if (display === 'completed') {
-      handleClearDone();
-    } else { handleClearAll(); }
+      clearDone();
+    } else {
+      clearAll();
+    }
   };
 
-  const displayMessage = () => {
+  const displayMessage = useMemo(() => {
     let typeMessage = 'todas as tarefas';
     let confirmButtons = true;
 
@@ -47,9 +45,9 @@ export default function ClearModalContainer({ clearModal, handleToggleModal }) {
     }
 
     return { message, confirmButtons };
-  };
+  }, [checkedItems.length, display, tasks.length]);
 
-  const { message, confirmButtons } = displayMessage();
+  const { message, confirmButtons } = displayMessage;
 
   return (
     <ConfirmModal

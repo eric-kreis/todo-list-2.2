@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useList } from '../../../../../Contexts/ListContext';
@@ -8,9 +8,8 @@ import IconButtonS from '../../../../../styles/IconButtonS.styles';
 import { Edit, Remove } from '../../../../../assets/icons';
 
 export default function TaskBody({ id, text, handleToggleEdit }) {
-  const { removeAndSaveToDo } = useList();
-  const handleRemoveItem = useCallback(() => (
-    removeAndSaveToDo(id)), [removeAndSaveToDo, id]);
+  const { removeToDo } = useList();
+  const handleRemoveItem = () => removeToDo(id);
 
   return (
     <TaskBodyS>
