@@ -4,11 +4,7 @@ const IconButtonS = styled.button`
   background-color: transparent;
   border: 0;
   color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ large, medium }) => {
-    if (large) return '24px';
-    if (medium) return '20px';
-    return '15px';
-  }};
+  font-size: 24px;
   padding: 2px;
   margin: 24px 0 24px 24px;
 
@@ -18,10 +14,6 @@ const IconButtonS = styled.button`
     if (clear) return 'red';
     return theme.colors.primary;
   }};
-  }
-
-  @media(max-width: 560px) {
-    font-size: ${({ medium }) => (medium) && '16px'};
   }
 `;
 

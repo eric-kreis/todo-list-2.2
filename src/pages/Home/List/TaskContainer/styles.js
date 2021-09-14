@@ -5,8 +5,8 @@ const ItemS = styled.li`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 70px;
   overflow-x: hidden;
+  padding: 18px 0 18px 4px;
 
   ::-webkit-scrollbar {
     display: none;

@@ -35,3 +35,20 @@ export const TaskButtonS = styled.div`
     justify-content: space-evenly;
   }
 `;
+
+export const TaskIconS = styled.button`
+  background-color: transparent;
+  border: 0;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 20px;
+  padding: 2px;
+  margin-right: 24px;
+
+  :hover {
+    color: ${({ theme, clear }) => (clear ? 'red' : theme.colors.primary)};
+  }
+
+  @media(max-width: 560px) {
+    font-size: 16px;
+  }
+`;
