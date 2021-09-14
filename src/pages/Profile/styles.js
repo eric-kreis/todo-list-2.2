@@ -56,7 +56,7 @@ const ProfileBodyS = styled.div`
       background-color: transparent;
       border: 0;
       border-radius: 3px;
-      color: ${({ theme }) => theme.colors.text};
+      color: ${({ theme }) => theme.colors.input};
       font-size: 22px;
       padding: 1px 0;
       width: 30px;
