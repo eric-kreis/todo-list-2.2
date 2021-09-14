@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom';
 import {
   FileUpload,
   Gallery,
-  Settings,
+  Gear,
   Trash,
 } from '../../../assets/icons';
-import PhotoSettingS from './styles';
+import SettingS from './styles';
 
 import { usePhoto } from '../../../Contexts/PhotoContext';
 
-export default function PhotoSettings({ handleChangeFile, setOpenDefaultModal, setOpenPetModal }) {
+export default function Settings({ handleChangeFile, setOpenDefaultModal, setOpenPetModal }) {
   const { image, loading } = usePhoto();
 
   return (
-    <PhotoSettingS>
+    <SettingS>
       <section className="photo-container">
         {!loading && <img src={image} alt="Perfil" />}
       </section>
@@ -46,14 +46,14 @@ export default function PhotoSettings({ handleChangeFile, setOpenDefaultModal, s
           <Gallery />
         </button>
         <Link to="/update-credentials" className="icon-btn update-credentials">
-          <Settings title="Alterar credenciais" />
+          <Gear title="Alterar credenciais" />
         </Link>
       </section>
-    </PhotoSettingS>
+    </SettingS>
   );
 }
 
-PhotoSettings.propTypes = {
+Settings.propTypes = {
   handleChangeFile: PropTypes.func.isRequired,
   setOpenDefaultModal: PropTypes.func.isRequired,
   setOpenPetModal: PropTypes.func.isRequired,

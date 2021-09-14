@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const PhotoSettingS = styled.div`
+const SettingS = styled.div`
   align-items: center;
   border-radius: 3px;
   display: flex;
@@ -31,8 +31,8 @@ const PhotoSettingS = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    height: 70px;
-    width: 70px;
+    height: 80px;
+    width: 80px;
   }
 
   label, .icon-btn {
@@ -45,7 +45,7 @@ const PhotoSettingS = styled.div`
     justify-content: center;
 
     * {
-      font-size: 26px;
+      font-size: 28px;
     }
 
     :hover {
@@ -73,4 +73,4 @@ const PhotoSettingS = styled.div`
   }
 `;
 
-export default PhotoSettingS;
+export default SettingS;

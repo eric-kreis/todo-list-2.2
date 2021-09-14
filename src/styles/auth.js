@@ -37,7 +37,8 @@ export const AuthContainerS = styled.section`
   @media(max-width: 640px) {
     border-radius: 0;
     box-shadow: none;
-    height: calc(var(--vh, 1vh) * 100);
+    height: 0;
+    min-height: calc(var(--vh, 1vh) * 100);
     width: 100%;
   }
 `;

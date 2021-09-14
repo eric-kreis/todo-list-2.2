@@ -36,7 +36,9 @@ export default function Header({ children }) {
       <h1>{ children }</h1>
       <div className="icon-container">
         <section className="image-container">
-          <Link to="/profile"><img alt="Profile" src={image} /></Link>
+          <Link to="/profile">
+            <img alt="Profile" src={image} />
+          </Link>
         </section>
         <Switch
           checked={title === 'dark'}

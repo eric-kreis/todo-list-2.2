@@ -41,8 +41,7 @@ const ProfileBodyS = styled.div`
     @media(max-width: 640px) {
       border-radius: 0;
       box-shadow: none;
-      height: 100vh;
-      max-height: calc(var(--vh, 1vh) * 100);
+      min-height: calc(var(--vh, 1vh) * 100);
       width: 100%;
     }
   }
@@ -79,7 +78,7 @@ export const ModalSectionS = styled.section`
   width: 25%;
 
   .photo-container {
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => shade(0.08, theme.colors.primary)};
     border-radius: 50%;
     justify-content: center;
     height: 125px;

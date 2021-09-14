@@ -64,7 +64,7 @@ export const ProfileIcon = FaUser;
 export const Logout = FiLogOut;
 
 // Settings;
-export const Settings = IoIosSettings;
+export const Gear = IoIosSettings;
 
 // Hamburguer menu;
 export const Menu = AiOutlineMenu;
