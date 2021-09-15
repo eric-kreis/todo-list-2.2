@@ -15,7 +15,7 @@ import { usePhoto } from '../../Contexts/PhotoContext';
 
 export default function Header({ children }) {
   const { title, colors } = useContext(ThemeContext);
-  const { image } = usePhoto();
+  const { image, loading } = usePhoto();
 
   const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ export default function Header({ children }) {
       <div className="icon-container">
         <section className="image-container">
           <Link to="/profile">
-            <img alt="Profile" src={image} />
+            { !loading && <img alt="Profile" src={image} /> }
           </Link>
         </section>
         <Switch

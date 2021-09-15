@@ -16,7 +16,7 @@ const SideBarS = styled.div`
       cursor: default;
     }
 
-    @media(max-width: 400px) {
+    @media(max-width: 394px) {
       top: 58px;
     }
   }
@@ -28,7 +28,6 @@ const SideBarS = styled.div`
     justify-content: space-between;
     height: calc(calc(var(--vh, 1vh) * 100) - 48px);
     left: ${({ active }) => (active ? 0 : '-200px')};
-    padding-top: 8px;
     position: absolute;
     transition: left 0.3s ease;
     top: 48px;
@@ -84,6 +83,10 @@ const SideBarS = styled.div`
           }
         }
       }
+    }
+
+    @media(max-width: 394px) {
+      top: 58px;
     }
   }
 `;
