@@ -5,23 +5,29 @@ export const HomeSectionS = styled.section`
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 0 auto;
-  padding: 32px 64px 20px;
+  padding: 32px 64px 16px;
   transition: margin width 0.5s ease;
   width: 48%;
 
   @media(max-width: 1080px) {
-    width: 60%;
-  }
-
-  @media(max-width: 768px) {
-    min-width: 380px;
-    padding: 32px 20px 60px;
     width: 70%;
   }
 
+  @media(max-width: 768px) {
+    padding: 32px 20px 16px;
+    width: 75%;
+  }
+
   @media(max-width: 560px){
-    min-width: 250px;
-    padding: 32px 0 60px;
+    padding: 32px 0 20px;
+  }
+
+  @media(max-width: 400px) {
+    width: 80%;
+  }
+
+  @media(max-width: 360px) {
+    width: 90%;
   }
 `;
 

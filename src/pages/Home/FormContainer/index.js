@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 
 import { useList } from '../../../Contexts/ListContext';
 import FormInput from './FormInput';
-import { MainFormS, SectionFormS, FormShowButtonS } from './styles';
-import IconButtonS from '../../../styles/IconButtonS.styles';
+import {
+  MainFormS,
+  SectionFormS,
+  FormShowButtonS,
+  IconButtonS,
+} from './styles';
 import { Add, Trash } from '../../../assets/icons';
 
 const validClass = 'form-control';
