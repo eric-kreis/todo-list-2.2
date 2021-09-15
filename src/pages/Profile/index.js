@@ -98,7 +98,6 @@ export default function Profile() {
     const myBlob = await imageFetch.blob();
     myBlob.name = 'pet.png';
     myBlob.lastModified = new Date();
-    myBlob.pet = true;
 
     const myFile = new File([myBlob], 'pet.png', {
       type: myBlob.type,
