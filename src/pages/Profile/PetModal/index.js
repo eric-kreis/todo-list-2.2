@@ -11,7 +11,6 @@ import cats from '../../../assets/cats';
 export default function PetModal({
   pets,
   setPets,
-  handleChangePet,
   handleSelectPet,
   setOpenPetModal,
 }) {
@@ -26,10 +25,10 @@ export default function PetModal({
         { !pets ? (
           <div className="select-section">
             <div className="select-btn">
-              <button type="button" value="cat" onClick={() => handleChangePet('cat')}>
+              <button type="button" value="cat" onClick={() => setPets('cat')}>
                 <img src={cats[1]} alt="Gato" />
               </button>
-              <button type="button" value="dog" onClick={() => handleChangePet('dog')}>
+              <button type="button" value="dog" onClick={() => setPets('dog')}>
                 <img src={dogs[1]} alt="Cachorro" />
               </button>
             </div>
@@ -61,7 +60,6 @@ export default function PetModal({
 PetModal.propTypes = {
   pets: PropTypes.string.isRequired,
   setPets: PropTypes.func.isRequired,
-  handleChangePet: PropTypes.func.isRequired,
   handleSelectPet: PropTypes.func.isRequired,
   setOpenPetModal: PropTypes.func.isRequired,
 };

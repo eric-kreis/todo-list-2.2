@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const TaskBodyS = styled.section`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100%;
+  padding-right: 4px;
   width: 100%;
   :hover {
     div {
@@ -22,9 +23,8 @@ export const TaskBodyS = styled.section`
 export const TaskButtonS = styled.div`
   align-items: center;
   display: flex;
-  min-width: 100px;
   justify-content: space-between;
-  width: 15%;
+  min-width: 60px;
   opacity: 0;
 
   @media(max-width: 768px) {
@@ -41,8 +41,6 @@ export const TaskIconS = styled.button`
   border: 0;
   color: ${({ theme }) => theme.colors.text};
   font-size: 20px;
-  padding: 2px;
-  margin-right: 24px;
 
   :hover {
     color: ${({ theme, clear }) => (clear ? 'red' : theme.colors.primary)};
