@@ -26,6 +26,7 @@ export default function Profile() {
     error,
     setPath,
     setImage,
+    setLoading,
     setError,
     handleDelete,
   } = usePhoto();
@@ -58,7 +59,7 @@ export default function Profile() {
   const handleUpload = async () => {
     if (customImg.type) {
       setError('');
-
+      setLoading(true);
       const metaData = {
         contentType: customImg.type,
         name: customImg.name,
@@ -90,6 +91,7 @@ export default function Profile() {
         setError('Falha ao atualizar sua imagem :(');
         setPath('/');
       }
+      setLoading(false);
     }
   };
 

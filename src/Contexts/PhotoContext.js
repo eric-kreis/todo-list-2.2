@@ -43,7 +43,6 @@ export default function PhotoProvider({ children }) {
               .getDownloadURL();
 
             setPath(doc.data().imagePath);
-            setLoading(false);
             setImage(imageURL);
           }
         } catch (imageError) {
@@ -80,18 +79,16 @@ export default function PhotoProvider({ children }) {
         try {
           setError('');
           const doc = await database.users.doc(currentUser.uid).get();
-          if (doc.exists && doc.data().imagePath !== path) {
+          if (path !== '/' && doc.exists && doc.data().imagePath !== path) {
             await database.users.doc(currentUser.uid).update({ imagePath: path });
           }
         } catch (imageError) {
           setError('Falha ao salvar o enderço da sua imagem :(');
           setPath('/');
         }
-      } else {
-        setImage(defaultImage);
       }
     })();
-  }, [currentUser, path]);
+  }, [currentUser, loading, path]);
 
   const handleDelete = async () => {
     setLoading(true);
