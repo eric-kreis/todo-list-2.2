@@ -8,12 +8,14 @@ const TaskLabelS = styled.label`
       ? 'line-through'
       : 'none'
   ))};
-  max-width: 80%;
+  max-width: 90%;
   overflow: hidden;
+  padding: 8px 0;
+  padding-right: 16px;
   width: 100%;
 
   input {
-    margin-right: 36px;
+    margin-right: 28px;
 
     :hover {
       cursor: pointer;
@@ -21,7 +23,7 @@ const TaskLabelS = styled.label`
   }
 
   span {
-    max-width: 100%;
+    overflow-x: hidden;
   }
 
   @media(max-width: 560px) {

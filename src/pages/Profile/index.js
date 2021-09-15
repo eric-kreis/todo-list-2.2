@@ -16,6 +16,9 @@ import { Logout } from '../../assets/icons';
 
 import PetModal from './PetModal';
 
+import dogs from '../../assets/dogs';
+import cats from '../../assets/cats';
+
 export default function Profile() {
   const { currentUser, logout } = useAuth();
   const {
@@ -54,12 +57,13 @@ export default function Profile() {
 
   const handleUpload = async () => {
     if (customImg.type) {
+      setError('');
+
       const metaData = {
         contentType: customImg.type,
         name: customImg.name,
       };
       const spacelessName = customImg.name.split(' ').join('');
-      setError('');
       try {
         await toast.promise(
           storage
@@ -89,10 +93,6 @@ export default function Profile() {
     }
   };
 
-  const handleChangePet = (pet) => {
-    setPets(pet);
-  };
-
   const handleSelectPet = async (img) => {
     const imageFetch = await fetch(img);
     const myBlob = await imageFetch.blob();
@@ -114,6 +114,17 @@ export default function Profile() {
     setOpenDefaultModal('');
     if (openDefaultModal === 'send') handleUpload();
     if (openDefaultModal === 'delete') handleDelete();
+  };
+
+  const handleDefaultReturn = () => {
+    const isDog = dogs.includes(prevImg);
+    const isCat = cats.includes(prevImg);
+
+    if (openDefaultModal === 'send' && (isDog || isCat)) {
+      setPets(isDog ? 'dog' : 'cat');
+      setOpenPetModal(true);
+    }
+    setOpenDefaultModal('');
   };
 
   if (error) {
@@ -140,7 +151,7 @@ export default function Profile() {
               <button type="button" onClick={handleModalClick}>
                 { openDefaultModal === 'send' ? 'Enviar' : 'Excluir'}
               </button>
-              <button onClick={() => setOpenDefaultModal('')} type="button">Voltar</button>
+              <button onClick={handleDefaultReturn} type="button">Voltar</button>
             </section>
           </ModalSectionS>
         </ModalWindowS>
@@ -150,7 +161,6 @@ export default function Profile() {
           pets={pets}
           setPets={setPets}
           handleSelectPet={handleSelectPet}
-          handleChangePet={handleChangePet}
           setOpenPetModal={setOpenPetModal}
         />
       ) }
