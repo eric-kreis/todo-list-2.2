@@ -8,51 +8,66 @@ import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { database } from '../firebase';
 import { useAuth } from './AuthContext';
+import { getDoc, setDoc } from '../helpers/database';
+import collections from '../helpers/collections';
 
 const ListContext = createContext();
 
 export const useList = () => useContext(ListContext);
 
 export default function ListProvider({ children }) {
+  const { userData } = collections;
   const { currentUser } = useAuth();
 
   const [display, setDisplay] = useState('all');
   const [tasks, setTasks] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
-
   const [loading, setLoading] = useState(true);
+
+  const resetState = () => {
+    setDisplay('all');
+    setTasks([]);
+    setCheckedItems([]);
+    setLoading(true);
+  };
 
   useEffect(() => {
     (async () => {
       if (currentUser) {
-        const doc = await database.userData.doc(currentUser.uid).get();
+        const doc = await getDoc({
+          collName: userData,
+          docName: currentUser.uid,
+        });
+
         if (doc.exists) {
-          const userData = doc.data();
-          setTasks(userData.tasks || []);
-          setCheckedItems(userData.checkedItems || []);
+          const savedData = doc.data();
+          setTasks(savedData.tasks || []);
+          setCheckedItems(savedData.checkedItems || []);
         } else {
           setTasks([]);
           setCheckedItems([]);
         }
         setLoading(false);
       } else {
-        setTasks([]);
-        setCheckedItems([]);
-        setLoading(true);
+        resetState();
       }
     })();
-  }, [currentUser]);
+  }, [currentUser, userData]);
 
   useEffect(() => {
     // DataBase saver;
     if (currentUser && !loading) {
-      database.userData.doc(currentUser.uid).set({
-        tasks,
-        checkedItems,
-        lastModification: database.getCurrentTimestamp(),
+      setDoc({
+        collName: userData,
+        docName: currentUser.uid,
+        data: {
+          tasks,
+          checkedItems,
+          lastModification: database.getCurrentTimestamp(),
+        },
       });
     }
-  }, [checkedItems, currentUser, loading, tasks]);
+  }, [checkedItems, currentUser, loading, tasks, userData]);
 
   const changeDisplay = ({ target: { value } }) => {
     setDisplay(value);

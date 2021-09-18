@@ -34,10 +34,8 @@ export default function Profile() {
   const { title } = useContext(ThemeContext);
 
   const [pets, setPets] = useState('');
-
   const [openDefaultModal, setOpenDefaultModal] = useState('');
   const [openPetModal, setOpenPetModal] = useState(false);
-
   const [prevImg, setPrevImg] = useState(null);
   const [customImg, setCustomImg] = useState({
     type: '',

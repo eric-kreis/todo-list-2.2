@@ -8,34 +8,43 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
 
-import { database, storage } from '../firebase';
+import { storage } from '../firebase';
 import { useAuth } from './AuthContext';
 
+import { getDoc, updateDoc } from '../helpers/database';
 import defaultImage from '../assets/default-profile.png';
+import collections from '../helpers/collections';
 
 const PhotoContext = createContext();
 
 export const usePhoto = () => useContext(PhotoContext);
 
 export default function PhotoProvider({ children }) {
+  const { users } = collections;
   const { title } = useContext(ThemeContext);
   const { currentUser } = useAuth();
 
   const [image, setImage] = useState(defaultImage);
-
   const [path, setPath] = useState('/');
-
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const [loading, setLoading] = useState(false);
+  const resetState = () => {
+    setImage(defaultImage);
+    setPath('/');
+    setError('');
+    setLoading(true);
+  };
 
   useEffect(() => {
     (async () => {
       if (currentUser) {
         try {
-          setError('');
-          setLoading(true);
-          const doc = await database.users.doc(currentUser.uid).get();
+          const doc = await getDoc({
+            collName: users,
+            docName: currentUser.uid,
+          });
+
           if (doc.exists && doc.data().imagePath !== '/') {
             const imageURL = await storage
               .ref(`images/${currentUser.uid}`)
@@ -62,15 +71,13 @@ export default function PhotoProvider({ children }) {
           }
           setPath('/');
           setImage(defaultImage);
-          setError('Ocorreu um problema ao carregar a imagem');
         }
         setLoading(false);
       } else {
-        setPath('/');
-        setImage(defaultImage);
+        resetState();
       }
     })();
-  }, [currentUser]);
+  }, [currentUser, users]);
 
   // State observer;
   useEffect(() => {
@@ -78,9 +85,17 @@ export default function PhotoProvider({ children }) {
       if (currentUser) {
         try {
           setError('');
-          const doc = await database.users.doc(currentUser.uid).get();
+          const doc = await getDoc({
+            collName: users,
+            docName: currentUser.uid,
+          });
+
           if (path !== '/' && doc.exists && doc.data().imagePath !== path) {
-            await database.users.doc(currentUser.uid).update({ imagePath: path });
+            await updateDoc({
+              collName: users,
+              docName: currentUser.uid,
+              data: { imagePath: path },
+            });
           }
         } catch (imageError) {
           setError('Falha ao salvar o enderço da sua imagem :(');
@@ -88,12 +103,16 @@ export default function PhotoProvider({ children }) {
         }
       }
     })();
-  }, [currentUser, loading, path]);
+  }, [currentUser, loading, path, users]);
 
   const handleDelete = async () => {
     setLoading(true);
     await toast.promise(
-      database.users.doc(currentUser.uid).update({ imagePath: '/' }),
+      updateDoc({
+        collName: users,
+        docName: currentUser.uid,
+        data: { imagePath: '/' },
+      }),
       {
         pending: {
           render() { return 'Processando...'; },
