@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { database } from '../firebase';
 import { useAuth } from './AuthContext';
 import { getDoc, setDoc } from '../helpers/database';
-import collections from '../helpers/collections';
+import collections from '../utils/collections';
 
 const ListContext = createContext();
 

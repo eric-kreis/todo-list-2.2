@@ -5,7 +5,6 @@ import { ThemeContext } from 'styled-components';
 
 import { useAuth } from '../../Contexts/AuthContext';
 import { usePhoto } from '../../Contexts/PhotoContext';
-import { storage } from '../../firebase';
 
 import ModalWindowS from '../../styles/ModalWindowS';
 import ProfileBodyS, { ModalSectionS } from './styles';
@@ -20,14 +19,11 @@ import dogs from '../../assets/dogs';
 import cats from '../../assets/cats';
 
 export default function Profile() {
-  const { currentUser, logout } = useAuth();
+  const { logout } = useAuth();
   const {
     image,
     error,
-    setPath,
-    setImage,
-    setLoading,
-    setError,
+    handleUpload,
     handleDelete,
   } = usePhoto();
 
@@ -54,45 +50,6 @@ export default function Profile() {
     }
   };
 
-  const handleUpload = async () => {
-    if (customImg.type) {
-      setError('');
-      setLoading(true);
-      const metaData = {
-        contentType: customImg.type,
-        name: customImg.name,
-      };
-      const spacelessName = customImg.name.split(' ').join('');
-      try {
-        await toast.promise(
-          storage
-            .ref(`images/${currentUser.uid}`)
-            .child(spacelessName)
-            .put(customImg, metaData),
-          {
-            pending: {
-              render() { return 'Processando...'; },
-              theme: title,
-            },
-            success: {
-              render() { return 'Foto Atualizada!'; },
-              theme: title,
-            },
-          },
-        );
-
-        const reader = new FileReader();
-        reader.readAsDataURL(customImg);
-        reader.onload = ({ target }) => setImage(target.result);
-        setPath(spacelessName);
-      } catch (imageError) {
-        setError('Falha ao atualizar sua imagem :(');
-        setPath('/');
-      }
-      setLoading(false);
-    }
-  };
-
   const handleSelectPet = async (img) => {
     const imageFetch = await fetch(img);
     const myBlob = await imageFetch.blob();
@@ -112,7 +69,7 @@ export default function Profile() {
 
   const handleModalClick = () => {
     setOpenDefaultModal('');
-    if (openDefaultModal === 'send') handleUpload();
+    if (openDefaultModal === 'send') handleUpload(customImg);
     if (openDefaultModal === 'delete') handleDelete();
   };
 

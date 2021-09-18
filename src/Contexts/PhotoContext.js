@@ -8,12 +8,12 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
 
-import { storage } from '../firebase';
 import { useAuth } from './AuthContext';
 
 import { getDoc, updateDoc } from '../helpers/database';
 import defaultImage from '../assets/default-profile.png';
-import collections from '../helpers/collections';
+import collections from '../utils/collections';
+import { getImgURL, sendImg } from '../helpers/storage';
 
 const PhotoContext = createContext();
 
@@ -46,10 +46,10 @@ export default function PhotoProvider({ children }) {
           });
 
           if (doc.exists && doc.data().imagePath !== '/') {
-            const imageURL = await storage
-              .ref(`images/${currentUser.uid}`)
-              .child(doc.data().imagePath)
-              .getDownloadURL();
+            const imageURL = await getImgURL({
+              userID: currentUser.uid,
+              imagePath: doc.data().imagePath,
+            });
 
             setPath(doc.data().imagePath);
             setImage(imageURL);
@@ -105,6 +105,43 @@ export default function PhotoProvider({ children }) {
     })();
   }, [currentUser, loading, path, users]);
 
+  const handleUpload = async (customImg) => {
+    if (customImg.type) {
+      setError('');
+      setLoading(true);
+
+      const spacelessName = customImg.name.split(' ').join('');
+      try {
+        await toast.promise(
+          sendImg({
+            userID: currentUser.uid,
+            name: spacelessName,
+            customImg,
+          }),
+          {
+            pending: {
+              render() { return 'Processando...'; },
+              theme: title,
+            },
+            success: {
+              render() { return 'Foto Atualizada!'; },
+              theme: title,
+            },
+          },
+        );
+
+        const reader = new FileReader();
+        reader.readAsDataURL(customImg);
+        reader.onload = ({ target }) => setImage(target.result);
+        setPath(spacelessName);
+      } catch (imageError) {
+        setError('Falha ao atualizar sua imagem :(');
+        setPath('/');
+      }
+      setLoading(false);
+    }
+  };
+
   const handleDelete = async () => {
     setLoading(true);
     await toast.promise(
@@ -142,6 +179,7 @@ export default function PhotoProvider({ children }) {
     setLoading,
     setError,
     setImage,
+    handleUpload,
     handleDelete,
   };
 
