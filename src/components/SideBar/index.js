@@ -4,17 +4,18 @@ import React, {
   useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../Contexts/AuthContext';
 import { Creators as BarActions } from '../../redux/reducers/sideBar';
 
 import { ColorPalette, Logout, ProfileIcon } from '../../assets/icons';
-import SideBarS from './styles';
+import SideBarS, { NullContainerS, SideButtonContainerS, SideButtonS } from './styles';
 import ColorModal from './ColorsContainer';
 
 export default function SideBar() {
   const { logout } = useAuth();
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -29,35 +30,36 @@ export default function SideBar() {
   useEffect(() => handleDisableBar, [handleDisableBar]);
 
   return (
-    <SideBarS active={active}>
-      <aside>
+    <div>
+      <SideBarS active={active}>
         <ul>
           <li>
-            <Link to="profile">
+            <SideButtonS type="button" onClick={() => history.push('/profile')}>
+              {/* This "sidebar-icon" class is in ./styles.js */}
               <ProfileIcon className="sidebar-icon" />
               Perfil
-            </Link>
+            </SideButtonS>
           </li>
         </ul>
         <footer>
           <ul>
             <li>
-              <div className="color-handle">
+              <SideButtonContainerS>
                 <ColorPalette className="sidebar-icon" />
                 Temas
                 <ColorModal />
-              </div>
+              </SideButtonContainerS>
             </li>
             <li>
-              <button type="button" onClick={logout} className="aside-btn">
+              <SideButtonS type="button" onClick={logout}>
                 <Logout className="sidebar-icon" />
                 Sair
-              </button>
+              </SideButtonS>
             </li>
           </ul>
         </footer>
-      </aside>
-      {active && <button type="button" className="null-container" onClick={handleToggleBar} />}
-    </SideBarS>
+      </SideBarS>
+      {active && <NullContainerS type="button" onClick={handleToggleBar} />}
+    </div>
   );
 }

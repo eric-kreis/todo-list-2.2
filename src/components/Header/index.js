@@ -9,7 +9,7 @@ import { Creators as ThemeActions } from '../../redux/reducers/changeTheme';
 import { Creators as BarActions } from '../../redux/reducers/sideBar';
 
 import Logo from '../../assets/Logo';
-import PageHeaderS from './styles';
+import PageHeaderS, { HeaderDivisionS, ImageContainerS } from './styles';
 import { Sun, Moon, Menu } from '../../assets/icons';
 import { usePhoto } from '../../Contexts/PhotoContext';
 
@@ -27,19 +27,19 @@ export default function Header({ children }) {
 
   return (
     <PageHeaderS>
-      <div className="icon-container">
+      <HeaderDivisionS>
         <button type="button" onClick={handleToggleBar}>
           <Menu />
         </button>
         <Logo />
-      </div>
+      </HeaderDivisionS>
       <h1>{ children }</h1>
-      <div className="icon-container">
-        <section className="image-container">
+      <HeaderDivisionS>
+        <ImageContainerS>
           <Link to="/profile">
             { !loading && <img alt="Profile" src={image} /> }
           </Link>
-        </section>
+        </ImageContainerS>
         <Switch
           checked={title === 'dark'}
           onChange={handleToggleTheme}
@@ -51,7 +51,7 @@ export default function Header({ children }) {
           offColor={colors.background}
           onColor={colors.background}
         />
-      </div>
+      </HeaderDivisionS>
     </PageHeaderS>
   );
 }

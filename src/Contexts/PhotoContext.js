@@ -46,7 +46,7 @@ export default function PhotoProvider({ children }) {
 
           if (doc.exists && doc.data().imagePath !== '/') {
             const imageURL = await getImgURL({
-              userID: currentUser.uid,
+              userId: currentUser.uid,
               imagePath: doc.data().imagePath,
             });
 
@@ -81,23 +81,16 @@ export default function PhotoProvider({ children }) {
   // State observer;
   useEffect(() => {
     (async () => {
-      if (currentUser) {
+      if (currentUser && !loading) {
         try {
           setError('');
-          const doc = await getDoc({
+          await updateDoc({
             collName: users,
             docName: currentUser.uid,
+            data: { imagePath: path },
           });
-
-          if (path !== '/' && doc.exists && doc.data().imagePath !== path) {
-            await updateDoc({
-              collName: users,
-              docName: currentUser.uid,
-              data: { imagePath: path },
-            });
-          }
         } catch (imageError) {
-          setError('Falha ao salvar o enderço da sua imagem :(');
+          setError('Falha ao salvar o enderço de sua imagem :(');
           setPath('/');
         }
       }
@@ -113,7 +106,7 @@ export default function PhotoProvider({ children }) {
       try {
         await toast.promise(
           sendImg({
-            userID: currentUser.uid,
+            userId: currentUser.uid,
             name: spacelessName,
             customImg,
           }),
@@ -141,29 +134,9 @@ export default function PhotoProvider({ children }) {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     setLoading(true);
-    await toast.promise(
-      updateDoc({
-        collName: users,
-        docName: currentUser.uid,
-        data: { imagePath: '/' },
-      }),
-      {
-        pending: {
-          render() { return 'Processando...'; },
-          theme: title,
-        },
-        success: {
-          render() { return 'Imagem removida :)'; },
-          theme: title,
-        },
-        error: {
-          render() { return 'Falha ao deletar a imagem :('; },
-          theme: title,
-        },
-      },
-    );
+    toast.success('Imagem removida :)');
     setPath('/');
     setImage(defaultImage);
     setLoading(false);
