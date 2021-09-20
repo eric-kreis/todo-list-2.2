@@ -4,7 +4,8 @@ import { Link, Redirect } from 'react-router-dom';
 import { useAuth } from '../../Contexts/AuthContext';
 import AuthHeader from '../../components/AuthHeader';
 import EmailInput from '../../components/EmailInput';
-import PasswordsSection from './PasswordsSection';
+import PasswordInput from '../../components/PasswordInput';
+
 import {
   AuthBodyS,
   AuthContainerS,
@@ -16,8 +17,8 @@ import SignupLoading from '../../assets/loadingComponents/SignupLoading';
 
 import { database } from '../../firebase';
 import { saveLogin } from '../../helpers';
-import { findDocByUserID, setDoc } from '../../helpers/database';
-import { users } from '../../utils/collections';
+import { getDoc, setDoc } from '../../helpers/database';
+import { userData, users } from '../../utils/collections';
 
 const validClass = 'form-control';
 const invalidClass = 'form-control is-invalid';
@@ -28,13 +29,10 @@ export default function Signup() {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPassowordValue] = useState('');
   const [confirmValue, setConfirmValue] = useState('');
-
   const [emailClass, setEmailClass] = useState(validClass);
   const [passwordClass, setPasswordClass] = useState(validClass);
   const [confirmPasswordClass, setConfirmPasswordClass] = useState(validClass);
-
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState('');
 
   const inputClasses = useMemo(() => (
@@ -118,27 +116,39 @@ export default function Signup() {
     document.title = 'Cadastre-se';
   }, []);
 
+  const createUserDocs = () => {
+    setDoc({
+      collName: users,
+      docName: currentUser.uid,
+      data: {
+        firstEmail: emailValue,
+        currentEmail: currentUser.email,
+        firstLogin: database.getCurrentTimestamp(),
+        imagePath: '/',
+      },
+    });
+
+    setDoc({
+      collName: userData,
+      docName: currentUser.uid,
+      data: {
+        currentEmail: currentUser.email,
+        tasks: [],
+        checkedItems: [],
+        lastModification: database.getCurrentTimestamp(),
+      },
+    });
+  };
+
   if (currentUser) {
     saveLogin(emailValue);
 
-    const doc = findDocByUserID({
+    const doc = getDoc({
       collName: users,
-      userID: currentUser.uid,
+      docName: currentUser.uid,
     });
 
-    if (!doc.exists) {
-      setDoc({
-        collName: users,
-        docName: currentUser.uid,
-        data: {
-          userId: currentUser.uid,
-          firstEmail: emailValue,
-          currentEmail: currentUser.email,
-          firstLogin: database.getCurrentTimestamp(),
-          imagePath: '/',
-        },
-      });
-    }
+    if (!doc.exists) createUserDocs();
 
     return <Redirect to="/" />;
   }
@@ -157,21 +167,39 @@ export default function Signup() {
                   className={emailClass}
                   onChange={handleValidateEmail}
                 >
-                  { emailClass === validClass ? 'E-mail' : 'Digite um e-mail válido' }
+                  { (emailClass === validClass)
+                    ? 'E-mail' : 'Digite um e-mail válido' }
                 </EmailInput>
-                <PasswordsSection
-                  passwordValue={passwordValue}
-                  confirmValue={confirmValue}
-                  passwordClass={passwordClass}
-                  confirmPasswordClass={confirmPasswordClass}
-                  handleValidatePassword={handleValidatePassword}
-                  handleValidateConfirm={handleValidateConfirm}
-                />
+                <section>
+                  <PasswordInput
+                    name="sign-pass"
+                    value={passwordValue}
+                    className={passwordClass}
+                    onChange={handleValidatePassword}
+                  >
+                    { (passwordClass === 'form-control')
+                      ? 'Senha' : 'Mínimo de 6 caracteres' }
+                  </PasswordInput>
+                  <PasswordInput
+                    name="sign-confirm"
+                    value={confirmValue}
+                    className={confirmPasswordClass}
+                    onChange={handleValidateConfirm}
+                  >
+                    { (confirmPasswordClass === 'form-control')
+                      ? 'Confirme sua senha' : 'As senhas não coincidem' }
+                  </PasswordInput>
+                </section>
               </div>
               <SubmitButtonS
                 type="submit"
                 onClick={handleSubmit}
-                disabled={!emailValue || !passwordValue || !confirmValue || !allValidated}
+                disabled={
+                  !emailValue
+                  || !passwordValue
+                  || !confirmValue
+                  || !allValidated
+                }
               >
                 Cadastre-se
               </SubmitButtonS>
