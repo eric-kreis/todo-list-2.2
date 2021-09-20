@@ -15,7 +15,7 @@ export default function ColorModal() {
     dispatch(ThemeActions.changeColor(e))), [dispatch]);
 
   return (
-    <ColorsContainerS className="colors-container">
+    <ColorsContainerS>
       <ColorButtonsContainerS>
         <ColorButtonS
           onClick={handleChangeColor}

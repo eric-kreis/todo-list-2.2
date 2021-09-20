@@ -1,16 +1,33 @@
 import styled from 'styled-components';
-import * as themeColors from '../../../themes';
 
-export const ColorsContainerS = styled.div`
+import * as themeColors from '../../../themes';
+import { SideButtonContainerS } from '../styles';
+
+export const ColorsContainerS = styled.section`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 0 5px 5px 0;
-  display: none;
+  display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
   left: 200px;
+  opacity: 0;
   padding: 20px;
   position: absolute;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+
+  ${SideButtonContainerS}:hover & {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media(max-width: 768px) {
+    ${SideButtonContainerS}:active & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 
   @media(max-width: 390px) {
     bottom: -58px;

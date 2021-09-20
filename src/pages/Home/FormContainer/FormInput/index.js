@@ -19,9 +19,7 @@ export default function FormInput({
   }, [formFocus]);
 
   const changeLabelText = () => {
-    if (formInputClass !== 'form-control') {
-      return 'Escreva algo :(';
-    }
+    if (formInputClass !== 'form-control') return 'Escreva algo :(';
     return 'Escreva aqui :)';
   };
 
