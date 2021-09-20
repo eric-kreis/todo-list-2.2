@@ -4,7 +4,6 @@ import { ToastContainer, toast, Flip } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
 
 import { useAuth } from '../../Contexts/AuthContext';
-import { database } from '../../firebase';
 
 import PasswordBox from './PasswordBox';
 import EmailBox from './EmailBox';
@@ -17,6 +16,9 @@ import {
   AuthContainerS,
   AuthFormS,
 } from '../../styles/auth';
+
+import { updateDoc } from '../../helpers/database';
+import { userData, users } from '../../utils/collections';
 
 const validClass = 'form-control';
 const invalidClass = 'form-control is-invalid';
@@ -84,6 +86,7 @@ export default function UpdateCredentials() {
     confirmValidation(value);
   };
 
+  // Make the toast and update user email;
   const changeEmail = async () => {
     if (emailClass === validClass && emailValue !== currentUser.email) {
       await toast.promise(
@@ -115,8 +118,20 @@ export default function UpdateCredentials() {
 
       setView('select');
 
-      database.users.doc(currentUser.uid).update({
-        currentEmail: currentUser.email,
+      updateDoc({
+        collName: users,
+        docName: currentUser.uid,
+        data: {
+          currentEmail: currentUser.email,
+        },
+      });
+
+      updateDoc({
+        collName: userData,
+        docName: currentUser.uid,
+        data: {
+          currentEmail: currentUser.email,
+        },
       });
     }
   };
