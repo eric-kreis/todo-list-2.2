@@ -29,11 +29,9 @@ export default function UpdateCredentials() {
   const { updateEmail, updatePassword, currentUser } = useAuth();
 
   const [view, setView] = useState('select');
-
   const [emailValue, setEmailValue] = useState(currentUser.email);
   const [passwordValue, setPassowordValue] = useState('');
   const [confirmValue, setConfirmValue] = useState('');
-
   const [emailClass, setEmailClass] = useState(validClass);
   const [passwordClass, setPasswordClass] = useState(validClass);
   const [confirmPasswordClass, setConfirmPasswordClass] = useState(validClass);
@@ -233,7 +231,9 @@ export default function UpdateCredentials() {
                 disabled={
                   view === 'email'
                     ? emailClass !== validClass
-                    : (passwordClass !== validClass || confirmPasswordClass !== validClass)
+                    : !passwordValue
+                      || !confirmValue
+                      || confirmPasswordClass !== validClass
                 }
               >
                 Atualizar
