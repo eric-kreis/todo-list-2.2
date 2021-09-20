@@ -12,7 +12,7 @@ import { useAuth } from './AuthContext';
 
 import { getDoc, updateDoc } from '../helpers/database';
 import defaultImage from '../assets/default-profile.png';
-import collections from '../utils/collections';
+import { users } from '../utils/collections';
 import { getImgURL, sendImg } from '../helpers/storage';
 
 const PhotoContext = createContext();
@@ -20,7 +20,6 @@ const PhotoContext = createContext();
 export const usePhoto = () => useContext(PhotoContext);
 
 export default function PhotoProvider({ children }) {
-  const { users } = collections;
   const { title } = useContext(ThemeContext);
   const { currentUser } = useAuth();
 
@@ -77,7 +76,7 @@ export default function PhotoProvider({ children }) {
         resetState();
       }
     })();
-  }, [currentUser, users]);
+  }, [currentUser]);
 
   // State observer;
   useEffect(() => {
@@ -103,7 +102,7 @@ export default function PhotoProvider({ children }) {
         }
       }
     })();
-  }, [currentUser, loading, path, users]);
+  }, [currentUser, loading, path]);
 
   const handleUpload = async (customImg) => {
     if (customImg.type) {

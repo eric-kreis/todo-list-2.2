@@ -8,15 +8,15 @@ import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { database } from '../firebase';
 import { useAuth } from './AuthContext';
+
 import { getDoc, setDoc } from '../helpers/database';
-import collections from '../utils/collections';
+import { userData } from '../utils/collections';
 
 const ListContext = createContext();
 
 export const useList = () => useContext(ListContext);
 
 export default function ListProvider({ children }) {
-  const { userData } = collections;
   const { currentUser } = useAuth();
 
   const [display, setDisplay] = useState('all');
@@ -52,7 +52,7 @@ export default function ListProvider({ children }) {
         resetState();
       }
     })();
-  }, [currentUser, userData]);
+  }, [currentUser]);
 
   useEffect(() => {
     // DataBase saver;
@@ -67,7 +67,7 @@ export default function ListProvider({ children }) {
         },
       });
     }
-  }, [checkedItems, currentUser, loading, tasks, userData]);
+  }, [checkedItems, currentUser, loading, tasks]);
 
   const changeDisplay = ({ target: { value } }) => {
     setDisplay(value);

@@ -1,4 +1,2 @@
-export default {
-  userData: 'userData',
-  users: 'users',
-};
+export const userData = 'userData';
+export const users = 'users';

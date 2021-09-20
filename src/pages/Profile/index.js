@@ -6,15 +6,14 @@ import { ThemeContext } from 'styled-components';
 import { useAuth } from '../../Contexts/AuthContext';
 import { usePhoto } from '../../Contexts/PhotoContext';
 
-import ModalWindowS from '../../styles/ModalWindowS';
-import ProfileBodyS, { ModalSectionS } from './styles';
+import ProfileBodyS, { LogoutContainerS, ProfileMainS } from './styles';
 
 import EmailsContainer from './EmailsContainer';
-import Settings from './Settings';
-import { Logout } from '../../assets/icons';
-
 import PetModal from './PetModal';
+import DefaultModal from './DefaultModal';
+import UserContainer from './UserContainer';
 
+import { Logout } from '../../assets/icons';
 import dogs from '../../assets/dogs';
 import cats from '../../assets/cats';
 
@@ -67,7 +66,7 @@ export default function Profile() {
     setPets('');
   };
 
-  const handleModalClick = () => {
+  const handleChangeImg = () => {
     setOpenDefaultModal('');
     if (openDefaultModal === 'send') handleUpload(customImg);
     if (openDefaultModal === 'delete') handleDelete();
@@ -99,19 +98,13 @@ export default function Profile() {
     <ProfileBodyS>
       <ToastContainer transition={Flip} />
       { openDefaultModal && (
-        <ModalWindowS>
-          <ModalSectionS>
-            <section className="photo-container">
-              <img src={openDefaultModal === 'send' ? prevImg : image} alt="PrevImg" />
-            </section>
-            <section className="modal-buttons-container">
-              <button type="button" onClick={handleModalClick}>
-                { openDefaultModal === 'send' ? 'Enviar' : 'Excluir'}
-              </button>
-              <button onClick={handleDefaultReturn} type="button">Voltar</button>
-            </section>
-          </ModalSectionS>
-        </ModalWindowS>
+        <DefaultModal
+          imageSrc={openDefaultModal === 'send' ? prevImg : image}
+          handleSubmit={handleChangeImg}
+          handleReturn={handleDefaultReturn}
+        >
+          { openDefaultModal === 'send' ? 'Enviar' : 'Excluir'}
+        </DefaultModal>
       )}
       { openPetModal && (
         <PetModal
@@ -121,8 +114,8 @@ export default function Profile() {
           setOpenPetModal={setOpenPetModal}
         />
       ) }
-      <section className="profile-container">
-        <Settings
+      <ProfileMainS>
+        <UserContainer
           handleChangeFile={handleChangeFile}
           setOpenDefaultModal={setOpenDefaultModal}
           setOpenPetModal={setOpenPetModal}
@@ -130,13 +123,13 @@ export default function Profile() {
         <EmailsContainer />
         <div>
           <Link to="/" className="link last">Voltar</Link>
-          <div className="logout-container">
+          <LogoutContainerS>
             <button type="button" onClick={logout}>
               <Logout title="Finalizar sessão" />
             </button>
-          </div>
+          </LogoutContainerS>
         </div>
-      </section>
+      </ProfileMainS>
     </ProfileBodyS>
   );
 }
