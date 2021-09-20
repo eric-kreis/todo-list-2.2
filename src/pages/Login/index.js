@@ -8,6 +8,7 @@ import {
   AuthBodyS,
   AuthContainerS,
   AuthFormS,
+  LinkContainerS,
   SubmitButtonS,
 } from '../../styles/auth';
 import AuthHeader from '../../components/AuthHeader';
@@ -98,7 +99,7 @@ export default function Login() {
         <AuthHeader>ENTRAR</AuthHeader>
         { loading ? <LoginLoading />
           : (
-            <AuthFormS onSubmit={(e) => e.preventDefault()} login>
+            <AuthFormS onSubmit={(e) => e.preventDefault()}>
               { error && <p className="error">{ error }</p> }
               <div>
                 <EmailInput
@@ -125,13 +126,13 @@ export default function Login() {
               >
                 Entrar
               </SubmitButtonS>
-              <div className="link-container">
+              <LinkContainerS>
                 <Link to="/reset-password">Esqueceu a senha?</Link>
                 <p>
                   {'Não tem uma conta? '}
                   <Link to="/register">Cadastre-se</Link>
                 </p>
-              </div>
+              </LinkContainerS>
             </AuthFormS>
           ) }
       </AuthContainerS>

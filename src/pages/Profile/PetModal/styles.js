@@ -10,36 +10,35 @@ const PetModalS = styled.section`
   min-width: 30%;
   text-align: center;
 
-  .return-btn {
-    background-color: whitesmoke;
-    border: 0;
-    border-radius: 3px;
-    color: ${({ theme }) => theme.colors.input};
-    margin: 32px auto;
-    padding: 8px 0;
-    width: 80%;
-
-    :hover {
-      background-color: ${shade(0.08, 'whitesmoke')};
-    }
+  @media(max-width: 1200px) {
+    max-width: 60%;
   }
 
-  .pet-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 100%;
+  @media(max-width: 790px) {
+    max-width: 75%;
   }
 
-  .select-section {
-    justify-content: space-evenly;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 32px 32px 0;
+  @media(max-width: 640px) {
+    max-width: 80%;
   }
 
-  .select-btn {
+  @media(max-width: 420px) {
+    border-radius: 0;
+    height: 100vh;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 100%;
+  }
+`;
+
+export const ChooseSectionS = styled.section`
+  justify-content: space-evenly;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 32px 32px 0;
+
+  section {
     align-items: center;
     display: flex;
     justify-content: space-between;
@@ -71,6 +70,27 @@ const PetModalS = styled.section`
       }
     }
   }
+`;
+
+export const ReturnButtonS = styled.button`
+  background-color: whitesmoke;
+  border: 0;
+  border-radius: 3px;
+  color: ${({ theme }) => theme.colors.input};
+  margin: 32px auto;
+  padding: 8px 0;
+  width: 80%;
+
+  :hover {
+    background-color: ${shade(0.08, 'whitesmoke')};
+  }
+`;
+
+export const PetSectionS = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
 
   ul {
     display: flex;
@@ -117,26 +137,6 @@ const PetModalS = styled.section`
         width: 70px;
       }
     }
-  }
-
-  @media(max-width: 1200px) {
-    max-width: 60%;
-  }
-
-  @media(max-width: 790px) {
-    max-width: 75%;
-  }
-
-  @media(max-width: 640px) {
-    max-width: 80%;
-  }
-
-  @media(max-width: 420px) {
-    border-radius: 0;
-    height: 100vh;
-    margin: 0 auto;
-    max-width: 100%;
-    min-width: 100%;
   }
 `;
 

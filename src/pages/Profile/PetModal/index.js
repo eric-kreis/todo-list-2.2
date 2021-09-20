@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 import ModalWindowS from '../../../styles/ModalWindowS';
-import PetModalS from './styles';
+import PetModalS, { ChooseSectionS, PetSectionS, ReturnButtonS } from './styles';
 
 import dogs from '../../../assets/dogs';
 import cats from '../../../assets/cats';
@@ -23,21 +23,21 @@ export default function PetModal({
     <ModalWindowS>
       <PetModalS>
         { !pets ? (
-          <div className="select-section">
-            <div className="select-btn">
+          <ChooseSectionS>
+            <section>
               <button type="button" value="cat" onClick={() => setPets('cat')}>
                 <img src={cats[1]} alt="Gato" />
               </button>
               <button type="button" value="dog" onClick={() => setPets('dog')}>
                 <img src={dogs[1]} alt="Cachorro" />
               </button>
-            </div>
-            <button type="button" onClick={() => setOpenPetModal(false)} className="return-btn">
+            </section>
+            <ReturnButtonS type="button" onClick={() => setOpenPetModal(false)}>
               Voltar
-            </button>
-          </div>
+            </ReturnButtonS>
+          </ChooseSectionS>
         ) : (
-          <div className="pet-section">
+          <PetSectionS>
             <ul>
               { images[pets].map((img) => (
                 <li key={uuidv4()}>
@@ -47,10 +47,10 @@ export default function PetModal({
                 </li>
               )) }
             </ul>
-            <button type="button" onClick={() => setPets('')} className="return-btn">
+            <ReturnButtonS type="button" onClick={() => setPets('')}>
               Voltar
-            </button>
-          </div>
+            </ReturnButtonS>
+          </PetSectionS>
         ) }
       </PetModalS>
     </ModalWindowS>

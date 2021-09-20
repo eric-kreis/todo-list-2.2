@@ -9,11 +9,15 @@ import {
   AuthBodyS,
   AuthContainerS,
   AuthFormS,
+  LinkContainerS,
   SubmitButtonS,
 } from '../../styles/auth';
 import SignupLoading from '../../assets/loadingComponents/SignupLoading';
+
 import { database } from '../../firebase';
 import { saveLogin } from '../../helpers';
+import { findDocByUserID, setDoc } from '../../helpers/database';
+import { users } from '../../utils/collections';
 
 const validClass = 'form-control';
 const invalidClass = 'form-control is-invalid';
@@ -117,14 +121,22 @@ export default function Signup() {
   if (currentUser) {
     saveLogin(emailValue);
 
-    const doc = database.users.where('userId', '==', currentUser.uid);
+    const doc = findDocByUserID({
+      collName: users,
+      userID: currentUser.uid,
+    });
+
     if (!doc.exists) {
-      database.users.doc(currentUser.uid).set({
-        userId: currentUser.uid,
-        firstEmail: emailValue,
-        currentEmail: currentUser.email,
-        firstLogin: database.getCurrentTimestamp(),
-        imagePath: '/',
+      setDoc({
+        collName: users,
+        docName: currentUser.uid,
+        data: {
+          userId: currentUser.uid,
+          firstEmail: emailValue,
+          currentEmail: currentUser.email,
+          firstLogin: database.getCurrentTimestamp(),
+          imagePath: '/',
+        },
       });
     }
 
@@ -163,10 +175,10 @@ export default function Signup() {
               >
                 Cadastre-se
               </SubmitButtonS>
-              <div className="link-container">
+              <LinkContainerS signup>
                 {'Já tem uma conta? '}
                 <Link to="/login">Entrar</Link>
-              </div>
+              </LinkContainerS>
             </AuthFormS>
           ) }
       </AuthContainerS>

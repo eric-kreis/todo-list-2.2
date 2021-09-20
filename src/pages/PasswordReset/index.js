@@ -8,6 +8,7 @@ import {
   AuthBodyS,
   AuthContainerS,
   AuthFormS,
+  LinkContainerS,
   SubmitButtonS,
 } from '../../styles/auth';
 
@@ -68,10 +69,10 @@ export default function PasswordReset() {
   return (
     <AuthBodyS>
       <AuthContainerS defaultH>
-        <AuthHeader>RECUPERE SUA SENHA</AuthHeader>
+        <AuthHeader>RESETE SUA SENHA</AuthHeader>
         { loading ? <ResetLoading />
           : (
-            <AuthFormS onSubmit={(e) => e.preventDefault()} login>
+            <AuthFormS onSubmit={(e) => e.preventDefault()}>
               { error && <p className="error">{ error }</p> }
               { success && <p className="success">{ success }</p> }
               <div>
@@ -91,13 +92,12 @@ export default function PasswordReset() {
               >
                 Enviar
               </SubmitButtonS>
-              <div className="link-container">
-                <Link to="/login">Entrar</Link>
+              <LinkContainerS>
                 <p>
-                  {'Não tem uma conta? '}
-                  <Link to="/register">Cadastre-se</Link>
+                  {'Senha alterada? '}
+                  <Link to="/login">Entrar</Link>
                 </p>
-              </div>
+              </LinkContainerS>
             </AuthFormS>
           ) }
       </AuthContainerS>

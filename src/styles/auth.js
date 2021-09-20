@@ -46,16 +46,8 @@ export const AuthContainerS = styled.section`
 export const AuthFormS = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: ${({ signup, login }) => {
-    if (signup) {
-      return 'flex-end';
-    }
-    if (login) {
-      return 'space-around';
-    }
-    return 'center';
-  }};
-  margin-top: ${({ login }) => login && '30px'};
+  justify-content: ${({ signup }) => (signup ? 'flex-end' : 'space-around')};
+  margin-top: ${({ signup }) => !signup && '30px'};
 
   .error {
     color: red;
@@ -94,32 +86,6 @@ export const AuthFormS = styled.form`
       font-size: 1rem;
     }
   }
-
-  .link-container {
-    padding: ${({ signup, login }) => {
-    if (signup) {
-      return '28px';
-    }
-    if (login) {
-      return '32px';
-    }
-    return 0;
-  }};
-
-    p {
-      margin: ${({ update }) => (update ? '16px' : '8px')} 0 0 0;
-    }
-
-    a {
-      color: ${({ theme }) => theme.colors.input};
-      text-decoration: none;
-      
-      :hover {
-        color: ${({ theme }) => theme.colors.primary};
-        text-decoration: underline;
-      }
-    }
-  }
 `;
 
 export const SubmitButtonS = styled.button`
@@ -137,5 +103,21 @@ export const SubmitButtonS = styled.button`
 
   :hover {
     background-color: ${({ theme }) => shade(0.1, theme.colors.primary)};
+  }
+`;
+
+export const LinkContainerS = styled.section`
+  padding: ${({ signup }) => (signup ? '34px' : '32px')};
+
+  p {
+    margin: ${({ update }) => (update ? '16px' : '8px')} 0 0 0;
+  }
+
+  a {
+    color: ${({ theme }) => theme.colors.input};
+
+    :hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 `;
