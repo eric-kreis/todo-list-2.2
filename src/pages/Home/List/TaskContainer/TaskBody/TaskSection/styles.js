@@ -16,6 +16,7 @@ const TaskLabelS = styled.label`
 
   input {
     margin-right: 28px;
+    min-width: 12px;
 
     :hover {
       cursor: pointer;
