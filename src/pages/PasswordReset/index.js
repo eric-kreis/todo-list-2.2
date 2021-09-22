@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ResetLoading from '../../assets/loadingComponents/ResetLoading';
+
 import AuthHeader from '../../components/AuthHeader';
 import EmailInput from '../../components/EmailInput';
+
 import { useAuth } from '../../Contexts/AuthContext';
+import { useEmail } from '../../hooks';
+
 import {
   AuthBodyS,
   AuthContainerS,
@@ -11,36 +14,19 @@ import {
   LinkContainerS,
   SubmitButtonS,
 } from '../../styles/auth';
+import ResetLoading from '../../assets/loadingComponents/ResetLoading';
 
-const validClass = 'form-control';
-const invalidClass = 'form-control is-invalid';
+import { validClass } from '../../utils/inputClasses';
 
 export default function PasswordReset() {
   const { resetPassword } = useAuth();
-
-  const [email, setEmail] = useState('');
-  const [emailClass, setEmailClass] = useState(validClass);
+  const [email, emailClass, handleChangeEmail] = useEmail();
 
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState('');
-
   const [success, setSuccess] = useState('');
 
-  const emailValidation = (value) => {
-    const emailPattern = /\S+@\S+\.\S+/;
-    if (emailPattern.test(value)) return setEmailClass(validClass);
-    return setEmailClass(invalidClass);
-  };
-
-  const handleChangeEmail = ({ target: { value } }) => {
-    setEmail(value);
-    emailValidation(value);
-  };
-
   const handleSubmit = async () => {
-    emailValidation(email);
-
     if (email && emailClass === validClass) {
       try {
         setLoading(true);
@@ -69,7 +55,7 @@ export default function PasswordReset() {
   return (
     <AuthBodyS>
       <AuthContainerS defaultH>
-        <AuthHeader>RESETE SUA SENHA</AuthHeader>
+        <AuthHeader>RECUPERAR SENHA</AuthHeader>
         { loading ? <ResetLoading />
           : (
             <AuthFormS onSubmit={(e) => e.preventDefault()}>

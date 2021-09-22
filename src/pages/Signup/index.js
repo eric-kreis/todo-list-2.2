@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
+import { useDoublePass, useEmail } from '../../hooks';
 import { useAuth } from '../../Contexts/AuthContext';
 import AuthHeader from '../../components/AuthHeader';
 import EmailInput from '../../components/EmailInput';
@@ -20,82 +21,33 @@ import { saveLogin } from '../../helpers';
 import { getDoc, setDoc } from '../../helpers/database';
 import { userData, users } from '../../utils/collections';
 
-const validClass = 'form-control';
-const invalidClass = 'form-control is-invalid';
+import { validClass } from '../../utils/inputClasses';
 
 export default function Signup() {
   const { signUp, currentUser } = useAuth();
+  const [email, emailClass, handleChangeEmail] = useEmail();
+  const {
+    password,
+    confirm,
+    passwordClass,
+    confirmClass,
+    handleChangePassword,
+    handleChangeConfirm,
+  } = useDoublePass();
 
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPassowordValue] = useState('');
-  const [confirmValue, setConfirmValue] = useState('');
-  const [emailClass, setEmailClass] = useState(validClass);
-  const [passwordClass, setPasswordClass] = useState(validClass);
-  const [confirmPasswordClass, setConfirmPasswordClass] = useState(validClass);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const inputClasses = useMemo(() => (
-    [emailClass, passwordClass, confirmPasswordClass]
-  ), [confirmPasswordClass, emailClass, passwordClass]);
-
-  // Email functions;
-  const emailValidation = (value) => {
-    const emailPattern = /\S+@\S+\.\S+/;
-    if (emailPattern.test(value)) {
-      setEmailClass(validClass);
-    } else {
-      setEmailClass(invalidClass);
-    }
-  };
-
-  const handleValidateEmail = ({ target: { value } }) => {
-    setEmailValue(value);
-    emailValidation(value);
-  };
-
-  // Password functions;
-  const passwordValidation = (value) => {
-    if (value.trim() && value.length >= 6) {
-      setPasswordClass(validClass);
-      if (value === confirmValue) {
-        setConfirmPasswordClass(validClass);
-      } else if (confirmValue) {
-        setConfirmPasswordClass(invalidClass);
-      }
-    } else {
-      setPasswordClass(invalidClass);
-    }
-  };
-
-  const handleValidatePassword = ({ target: { value } }) => {
-    setPassowordValue(value);
-    passwordValidation(value);
-  };
-
-  // Confirm password functions;
-  const confirmValidation = (value) => {
-    if (value === passwordValue && value.trim()) {
-      setConfirmPasswordClass(validClass);
-    } else {
-      setConfirmPasswordClass(invalidClass);
-    }
-  };
-
-  const handleValidateConfirm = ({ target: { value } }) => {
-    setConfirmValue(value);
-    confirmValidation(value);
-  };
-
   const allValidated = useMemo(() => (
-    inputClasses.every((inputClass) => inputClass === validClass)
-  ), [inputClasses]);
+    [emailClass, passwordClass, confirmClass]
+      .every((inputClass) => inputClass === validClass)
+  ), [emailClass, passwordClass, confirmClass]);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
       setError('');
-      await signUp(emailValue, passwordValue);
+      await signUp(email, password);
     } catch (signError) {
       switch (signError.code) {
         case 'auth/email-already-in-use':
@@ -121,7 +73,7 @@ export default function Signup() {
       collName: users,
       docName: currentUser.uid,
       data: {
-        firstEmail: emailValue,
+        firstEmail: email,
         currentEmail: currentUser.email,
         firstLogin: database.getCurrentTimestamp(),
         imagePath: '/',
@@ -141,7 +93,7 @@ export default function Signup() {
   };
 
   if (currentUser) {
-    saveLogin(emailValue);
+    saveLogin(email);
 
     const doc = getDoc({
       collName: users,
@@ -163,9 +115,9 @@ export default function Signup() {
               <div>
                 <EmailInput
                   name="sign"
-                  value={emailValue}
+                  value={email}
                   className={emailClass}
-                  onChange={handleValidateEmail}
+                  onChange={handleChangeEmail}
                 >
                   { (emailClass === validClass)
                     ? 'E-mail' : 'Digite um e-mail válido' }
@@ -173,20 +125,20 @@ export default function Signup() {
                 <section>
                   <PasswordInput
                     name="sign-pass"
-                    value={passwordValue}
+                    value={password}
                     className={passwordClass}
-                    onChange={handleValidatePassword}
+                    onChange={handleChangePassword}
                   >
                     { (passwordClass === 'form-control')
                       ? 'Senha' : 'Mínimo de 6 caracteres' }
                   </PasswordInput>
                   <PasswordInput
                     name="sign-confirm"
-                    value={confirmValue}
-                    className={confirmPasswordClass}
-                    onChange={handleValidateConfirm}
+                    value={confirm}
+                    className={confirmClass}
+                    onChange={handleChangeConfirm}
                   >
-                    { (confirmPasswordClass === 'form-control')
+                    { (confirmClass === 'form-control')
                       ? 'Confirme sua senha' : 'As senhas não coincidem' }
                   </PasswordInput>
                 </section>
@@ -195,9 +147,9 @@ export default function Signup() {
                 type="submit"
                 onClick={handleSubmit}
                 disabled={
-                  !emailValue
-                  || !passwordValue
-                  || !confirmValue
+                  !email
+                  || !password
+                  || !confirm
                   || !allValidated
                 }
               >

@@ -3,39 +3,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PasswordInput from '../../../components/PasswordInput';
 
-const validClass = 'form-control';
-const invalidClass = 'form-control is-invalid';
-
 export default function PassowrdBox({
-  passwordValue,
-  confirmValue,
+  password,
+  confirm,
   passwordClass,
-  confirmPasswordClass,
-  handleValidatePassword,
-  handleValidateConfirm,
-  setPasswordClass,
-  setConfirmPasswordClass,
+  confirmClass,
+  handleChangePassword,
+  handleChangeConfirm,
 }) {
   return (
     <section>
       <PasswordInput
         name="sign-pass"
-        value={passwordValue}
+        value={password}
         className={passwordClass}
-        onChange={handleValidatePassword}
-        onBlur={() => {
-          setPasswordClass((prevClass) => {
-            if (!passwordValue && (prevClass === invalidClass)) return validClass;
-            return prevClass;
-          });
-
-          setConfirmPasswordClass((prevClass) => {
-            if ((!passwordValue && !confirmValue) && (prevClass === invalidClass)) {
-              return validClass;
-            }
-            return prevClass;
-          });
-        }}
+        onChange={handleChangePassword}
       >
         { (passwordClass === 'form-control')
           ? 'Senha'
@@ -43,19 +25,11 @@ export default function PassowrdBox({
       </PasswordInput>
       <PasswordInput
         name="sign-confirm"
-        value={confirmValue}
-        className={confirmPasswordClass}
-        onChange={handleValidateConfirm}
-        onBlur={() => {
-          setConfirmPasswordClass((prevClass) => {
-            if ((!passwordValue && !confirmValue) && (prevClass === invalidClass)) {
-              return validClass;
-            }
-            return prevClass;
-          });
-        }}
+        value={confirm}
+        className={confirmClass}
+        onChange={handleChangeConfirm}
       >
-        { (confirmPasswordClass === 'form-control')
+        { (confirmClass === 'form-control')
           ? 'Confirme sua senha' : 'As senhas não coincidem' }
       </PasswordInput>
     </section>
@@ -63,12 +37,10 @@ export default function PassowrdBox({
 }
 
 PassowrdBox.propTypes = {
-  passwordValue: PropTypes.string.isRequired,
-  confirmValue: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  confirm: PropTypes.string.isRequired,
   passwordClass: PropTypes.string.isRequired,
-  confirmPasswordClass: PropTypes.string.isRequired,
-  handleValidatePassword: PropTypes.func.isRequired,
-  handleValidateConfirm: PropTypes.func.isRequired,
-  setPasswordClass: PropTypes.func.isRequired,
-  setConfirmPasswordClass: PropTypes.func.isRequired,
+  confirmClass: PropTypes.string.isRequired,
+  handleChangePassword: PropTypes.func.isRequired,
+  handleChangeConfirm: PropTypes.func.isRequired,
 };

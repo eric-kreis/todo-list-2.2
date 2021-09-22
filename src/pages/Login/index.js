@@ -15,50 +15,22 @@ import AuthHeader from '../../components/AuthHeader';
 import LoginLoading from '../../assets/loadingComponents/LoginLoading';
 import { saveLogin } from '../../helpers';
 
-const validClass = 'form-control';
-const invalidClass = 'form-control is-invalid';
+import { validClass } from '../../utils/inputClasses';
+import { useEmail, usePassword } from '../../hooks';
 
 export default function Login() {
   const { login, currentUser } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [emailClass, setEmailClass] = useState(validClass);
-  const [passwordClass, setPasswordClass] = useState(validClass);
+  const [email, emailClass, handleChangeEmail] = useEmail();
+  const [password, passwordClass, handleChangePassword] = usePassword();
 
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState('');
 
-  const inputClasses = useMemo(() => (
-    [emailClass, passwordClass]
-  ), [emailClass, passwordClass]);
-
-  const emailValidation = (value) => {
-    const emailPattern = /\S+@\S+\.\S+/;
-    if (emailPattern.test(value)) return setEmailClass(validClass);
-    return setEmailClass(invalidClass);
-  };
-
-  const handleChangeEmail = ({ target: { value } }) => {
-    setEmail(value);
-    emailValidation(value);
-  };
-
-  const passwordValidation = (value) => {
-    if (value.trim()) return setPasswordClass(validClass);
-    return setPasswordClass(invalidClass);
-  };
-
-  const handleChangePassword = ({ target: { value } }) => {
-    setPassword(value);
-    passwordValidation(value);
-  };
-
   const allValidated = useMemo(() => (
-    inputClasses.every((inputClass) => inputClass === validClass)
-  ), [inputClasses]);
+    [emailClass, passwordClass]
+      .every((inputClass) => inputClass === validClass)
+  ), [emailClass, passwordClass]);
 
   const handleSubmit = async () => {
     try {
