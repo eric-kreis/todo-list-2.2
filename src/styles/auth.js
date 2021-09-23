@@ -11,7 +11,7 @@ export const AuthBodyS = styled.div`
 export const AuthContainerS = styled.section`
   background-color: whitesmoke;
   border-radius: 5px;
-  box-shadow: 1px 1px 10px ${({ theme }) => shade(0.2, theme.colors.primary)};
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   color: ${({ theme }) => theme.colors.input};
   display: grid;
   grid-template-rows: 4fr 6fr;

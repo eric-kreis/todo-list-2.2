@@ -21,7 +21,7 @@ export default function PassowrdBox({
       >
         { (passwordClass === 'form-control')
           ? 'Senha'
-          : 'Digite uma senha válida' }
+          : 'Mínimo de 6 caracteres' }
       </PasswordInput>
       <PasswordInput
         name="sign-confirm"

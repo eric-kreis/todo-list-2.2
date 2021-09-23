@@ -20,66 +20,49 @@ import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FaUser, FaDog, FaCat } from 'react-icons/fa';
 import { RiFolderUploadLine } from 'react-icons/ri';
+import { BiCheck } from 'react-icons/bi';
 
-// Add;
 export const Add = VscAdd;
 
-// Trash;
 export const Trash = IoMdTrash;
 
-// Edit;
 export const Edit = MdModeEdit;
 
-// Remove;
 export const Remove = IoMdRemove;
 
-// Exit;
 export const Exit = IoExitOutline;
 
-// Sun;
 export const Sun = HiSun;
 
-// Moon;
 export const Moon = HiMoon;
 
-// LinkedIn;
 export const LinkedIn = SiLinkedin;
 
-// GitHub;
 export const GitHub = SiGithub;
 
-// Paint Brush;
 export const ColorPalette = IoColorPalette;
 
-// EyeOn;
 export const EyeOn = IoEyeSharp;
 
-// EyeOff;
 export const EyeOff = IoEyeOffSharp;
 
-// Profile;
 export const ProfileIcon = FaUser;
 
-// Logout;
 export const Logout = FiLogOut;
 
-// Settings;
 export const Gear = IoIosSettings;
 
 // Hamburguer menu;
 export const Menu = AiOutlineMenu;
 
-// Upload;
 export const Upload = IoCloudUploadOutline;
 
-// File upload
 export const FileUpload = RiFolderUploadLine;
 
-// Gallery;
 export const Gallery = IoMdImages;
 
-// Dog;
 export const Dog = FaDog;
 
-// Cat;
 export const Cat = FaCat;
+
+export const Check = BiCheck;

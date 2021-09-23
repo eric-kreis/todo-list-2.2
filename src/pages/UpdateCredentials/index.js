@@ -151,7 +151,6 @@ export default function UpdateCredentials() {
         <AuthFormS onSubmit={(e) => e.preventDefault()} update>
           <div>
             { view === 'select' && <SelectBox handleChangeView={handleChangeView} />}
-
             { view === 'email' && (
               <EmailInput
                 name="sign"
@@ -162,7 +161,6 @@ export default function UpdateCredentials() {
                 { emailClass === validClass ? 'E-mail' : 'Digite um e-mail válido' }
               </EmailInput>
             ) }
-
             { view === 'password'
             && (
               <PasswordBox
@@ -174,7 +172,6 @@ export default function UpdateCredentials() {
                 handleChangeConfirm={handleChangeConfirm}
               />
             ) }
-
           </div>
           <ButtonContainerS>
             { view !== 'select' && (
