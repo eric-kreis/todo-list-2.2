@@ -16,13 +16,17 @@ export const StatusSectionS = styled.section`
   position: absolute;
 
   img {
-    height: 10px;
-    width: 10px;
-    margin-right: 6px;
+    height: ${({ isSaving }) => (isSaving ? '10px' : 0)};
+    margin-right: ${({ isSaving }) => (isSaving ? '6px' : 0)};
+    visibility: ${({ isSaving }) => (isSaving ? 'visible' : 'hidden')};
+    width: ${({ isSaving }) => (isSaving ? '10px' : 0)};
   }
 
   .check-icon {
-    margin-right: 2px;
+    height: ${({ isSaving }) => isSaving && 0};
+    margin-right: ${({ isSaving }) => (isSaving ? 0 : '2px')};
+    visibility: ${({ isSaving }) => (isSaving ? 'hidden' : 'visible')};
+    width: ${({ isSaving }) => isSaving && 0};
   }
 
   span {

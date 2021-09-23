@@ -63,14 +63,11 @@ export default function FormContainer({ handleToggleModal }) {
 
   return (
     <MainFormS onSubmit={(e) => e.preventDefault()}>
-      <StatusSectionS>
-        { isSaving
-          ? <img src={loader} alt="loading" />
-          : <Check className="check-icon" /> }
+      <StatusSectionS isSaving={isSaving}>
+        <img src={loader} alt="loading" />
+        <Check className="check-icon" />
         <span>
-          { isSaving
-            ? 'Salvando alterações...'
-            : 'Informações atualizadas' }
+          { isSaving ? 'Salvando...' : 'Alterações salvas' }
         </span>
       </StatusSectionS>
       <SectionFormS>

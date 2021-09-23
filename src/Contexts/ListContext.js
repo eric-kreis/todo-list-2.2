@@ -33,8 +33,8 @@ export default function ListProvider({ children }) {
   };
 
   useEffect(() => {
-    (async () => {
-      if (currentUser) {
+    if (currentUser) {
+      (async () => {
         const doc = await getDoc({
           collName: userData,
           docName: currentUser.uid,
@@ -49,10 +49,10 @@ export default function ListProvider({ children }) {
           setCheckedItems([]);
         }
         setLoading(false);
-      } else {
-        resetState();
-      }
-    })();
+      })();
+    } else {
+      resetState();
+    }
   }, [currentUser]);
 
   // DataBase observer;
