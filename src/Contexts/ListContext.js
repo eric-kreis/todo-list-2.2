@@ -23,6 +23,7 @@ export default function ListProvider({ children }) {
   const [tasks, setTasks] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   const resetState = () => {
     setDisplay('all');
@@ -32,8 +33,8 @@ export default function ListProvider({ children }) {
   };
 
   useEffect(() => {
-    (async () => {
-      if (currentUser) {
+    if (currentUser) {
+      (async () => {
         const doc = await getDoc({
           collName: userData,
           docName: currentUser.uid,
@@ -48,24 +49,28 @@ export default function ListProvider({ children }) {
           setCheckedItems([]);
         }
         setLoading(false);
-      } else {
-        resetState();
-      }
-    })();
+      })();
+    } else {
+      resetState();
+    }
   }, [currentUser]);
 
+  // DataBase observer;
   useEffect(() => {
-    // DataBase saver;
     if (currentUser && !loading) {
-      updateDoc({
-        collName: userData,
-        docName: currentUser.uid,
-        data: {
-          tasks,
-          checkedItems,
-          lastModification: database.getCurrentTimestamp(),
-        },
-      });
+      (async () => {
+        setIsSaving(true);
+        await updateDoc({
+          collName: userData,
+          docName: currentUser.uid,
+          data: {
+            tasks,
+            checkedItems,
+            lastModification: database.getCurrentTimestamp(),
+          },
+        });
+        setIsSaving(false);
+      })();
     }
   }, [checkedItems, currentUser, loading, tasks]);
 
@@ -134,6 +139,7 @@ export default function ListProvider({ children }) {
     tasks,
     checkedItems,
     loading,
+    isSaving,
     changeDisplay,
     addToDo,
     removeToDo,

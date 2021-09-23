@@ -8,6 +8,32 @@ export const MainFormS = styled.form`
   width: 100%;
 `;
 
+export const StatusSectionS = styled.section`
+  align-items: center;
+  color: ${({ theme }) => transparentize(0.3, theme.colors.text)};
+  display: flex;
+  height: 20px;
+  position: absolute;
+
+  img {
+    height: ${({ isSaving }) => (isSaving ? '10px' : 0)};
+    margin-right: ${({ isSaving }) => (isSaving ? '6px' : 0)};
+    visibility: ${({ isSaving }) => (isSaving ? 'visible' : 'hidden')};
+    width: ${({ isSaving }) => (isSaving ? '10px' : 0)};
+  }
+
+  .check-icon {
+    height: ${({ isSaving }) => isSaving && 0};
+    margin-right: ${({ isSaving }) => (isSaving ? 0 : '2px')};
+    visibility: ${({ isSaving }) => (isSaving ? 'hidden' : 'visible')};
+    width: ${({ isSaving }) => isSaving && 0};
+  }
+
+  span {
+    font-size: 10px;
+  }
+`;
+
 export const SectionFormS = styled.section`
   align-items: center;
   display: flex;
@@ -15,9 +41,10 @@ export const SectionFormS = styled.section`
   margin-bottom: 16px;
   width: 100%;
 
-  @media(max-width: 560px) {
-    flex-wrap: wrap;
-    margin-bottom: 5px;
+  :last-of-type {
+    @media(max-width: 560px) {
+      flex-wrap: wrap;
+    }
   }
 `;
 
@@ -70,6 +97,6 @@ export const IconButtonS = styled.button`
   }
 
   @media(max-width: 560px) {
-    margin: 16px 0;
+    margin: 24px 0 24px 14px;
   }
 `;

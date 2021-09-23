@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from '../../../components/ConfirmModal';
 import { useList } from '../../../Contexts/ListContext';
 
 export default function ClearModalContainer({ clearModal, handleToggleModal }) {

@@ -8,21 +8,25 @@ import {
   SectionFormS,
   FormShowButtonS,
   IconButtonS,
+  StatusSectionS,
 } from './styles';
-import { Add, Trash } from '../../../assets/icons';
 
-const validClass = 'form-control';
-const invalidClass = 'form-control is-invalid';
+import { invalidClass, validClass } from '../../../utils/inputClasses';
+
+import { Add, Check, Trash } from '../../../assets/icons';
+import loader from '../../../assets/loading.gif';
 
 export default function FormContainer({ handleToggleModal }) {
-  // Getting information from "listState" Reducer;
-  const { display, changeDisplay, addToDo } = useList();
+  const {
+    display,
+    changeDisplay,
+    addToDo,
+    isSaving,
+  } = useList();
 
-  // Using disptach;
   const handleAddItem = (text) => addToDo(text);
   const handleDisplayTasks = (e) => changeDisplay(e);
 
-  // Component state;
   const [taskText, setTaskText] = useState('');
   const [formInputClass, setInputClass] = useState(validClass);
   const [formFocus, setFormFocus] = useState(false);
@@ -59,6 +63,13 @@ export default function FormContainer({ handleToggleModal }) {
 
   return (
     <MainFormS onSubmit={(e) => e.preventDefault()}>
+      <StatusSectionS isSaving={isSaving}>
+        <img src={loader} alt="loading" />
+        <Check className="check-icon" />
+        <span>
+          { isSaving ? 'Salvando...' : 'Alterações salvas' }
+        </span>
+      </StatusSectionS>
       <SectionFormS>
         <FormInput
           taskText={taskText}

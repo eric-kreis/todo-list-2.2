@@ -25,7 +25,6 @@ export default function Profile() {
     handleUpload,
     handleDelete,
   } = usePhoto();
-
   const { title } = useContext(ThemeContext);
 
   const [pets, setPets] = useState('');
@@ -105,7 +104,7 @@ export default function Profile() {
         >
           { openDefaultModal === 'send' ? 'Enviar' : 'Excluir'}
         </DefaultModal>
-      )}
+      ) }
       { openPetModal && (
         <PetModal
           pets={pets}

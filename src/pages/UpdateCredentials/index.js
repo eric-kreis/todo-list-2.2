@@ -4,13 +4,15 @@ import { ToastContainer, toast, Flip } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
 
 import { useAuth } from '../../Contexts/AuthContext';
+import { useDoublePass, useEmail } from '../../hooks';
 
 import PasswordBox from './PasswordBox';
-import EmailBox from './EmailBox';
 import SelectBox from './SelectBox';
 import ButtonContainerS from './styles';
 
 import AuthHeader from '../../components/AuthHeader';
+import EmailInput from '../../components/EmailInput';
+
 import {
   AuthBodyS,
   AuthContainerS,
@@ -19,76 +21,30 @@ import {
 
 import { updateDoc } from '../../helpers/database';
 import { userData, users } from '../../utils/collections';
-
-const validClass = 'form-control';
-const invalidClass = 'form-control is-invalid';
+import { validClass } from '../../utils/inputClasses';
 
 export default function UpdateCredentials() {
   const history = useHistory();
   const { title } = useContext(ThemeContext);
   const { updateEmail, updatePassword, currentUser } = useAuth();
+  const [email, emailClass, handleChangeEmail] = useEmail(currentUser.email);
+  const {
+    password,
+    confirm,
+    passwordClass,
+    confirmClass,
+    handleChangePassword,
+    handleChangeConfirm,
+    resetState,
+  } = useDoublePass();
 
   const [view, setView] = useState('select');
-  const [emailValue, setEmailValue] = useState(currentUser.email);
-  const [passwordValue, setPassowordValue] = useState('');
-  const [confirmValue, setConfirmValue] = useState('');
-  const [emailClass, setEmailClass] = useState(validClass);
-  const [passwordClass, setPasswordClass] = useState(validClass);
-  const [confirmPasswordClass, setConfirmPasswordClass] = useState(validClass);
-
-  // Email functions;
-  const emailValidation = (value) => {
-    const emailPattern = /\S+@\S+\.\S+/;
-    if (emailPattern.test(value)) {
-      setEmailClass(validClass);
-    } else {
-      setEmailClass(invalidClass);
-    }
-  };
-
-  const handleValidateEmail = ({ target: { value } }) => {
-    setEmailValue(value);
-    emailValidation(value);
-  };
-
-  // Password functions;
-  const passwordValidation = (value) => {
-    if (value.trim()) {
-      setPasswordClass(validClass);
-      if (value === confirmValue) {
-        setConfirmPasswordClass(validClass);
-      } else if (confirmValue) {
-        setConfirmPasswordClass(invalidClass);
-      }
-    } else {
-      setPasswordClass(invalidClass);
-    }
-  };
-
-  const handleValidatePassword = ({ target: { value } }) => {
-    setPassowordValue(value);
-    passwordValidation(value);
-  };
-
-  // Confirm password functions;
-  const confirmValidation = (value) => {
-    if (value === passwordValue && value.trim()) {
-      setConfirmPasswordClass(validClass);
-    } else {
-      setConfirmPasswordClass(invalidClass);
-    }
-  };
-
-  const handleValidateConfirm = ({ target: { value } }) => {
-    setConfirmValue(value);
-    confirmValidation(value);
-  };
 
   // Make the toast and update user email;
   const changeEmail = async () => {
-    if (emailClass === validClass && emailValue !== currentUser.email) {
+    if (emailClass === validClass && email !== currentUser.email) {
       await toast.promise(
-        updateEmail(emailValue),
+        updateEmail(email),
         {
           pending: {
             render() { return 'Alterando email...'; },
@@ -135,12 +91,9 @@ export default function UpdateCredentials() {
   };
 
   const changePassword = async () => {
-    if (passwordValue === confirmValue) {
-      passwordValidation(passwordValue);
-      confirmValidation(confirmValue);
-
+    if (password === confirm) {
       await toast.promise(
-        updatePassword(confirmValue),
+        updatePassword(confirm),
         {
           pending: {
             render() { return 'Alterando senha...'; },
@@ -166,6 +119,7 @@ export default function UpdateCredentials() {
         },
       );
       setView('select');
+      resetState();
     }
   };
 
@@ -197,30 +151,27 @@ export default function UpdateCredentials() {
         <AuthFormS onSubmit={(e) => e.preventDefault()} update>
           <div>
             { view === 'select' && <SelectBox handleChangeView={handleChangeView} />}
-
             { view === 'email' && (
-              <EmailBox
-                emailValue={emailValue}
-                emailClass={emailClass}
-                validClass={validClass}
-                handleValidateEmail={handleValidateEmail}
-              />
+              <EmailInput
+                name="sign"
+                value={email}
+                className={emailClass}
+                onChange={handleChangeEmail}
+              >
+                { emailClass === validClass ? 'E-mail' : 'Digite um e-mail válido' }
+              </EmailInput>
             ) }
-
             { view === 'password'
             && (
               <PasswordBox
-                passwordValue={passwordValue}
-                confirmValue={confirmValue}
+                password={password}
+                confirm={confirm}
                 passwordClass={passwordClass}
-                confirmPasswordClass={confirmPasswordClass}
-                handleValidatePassword={handleValidatePassword}
-                handleValidateConfirm={handleValidateConfirm}
-                setPasswordClass={setPasswordClass}
-                setConfirmPasswordClass={setConfirmPasswordClass}
+                confirmClass={confirmClass}
+                handleChangePassword={handleChangePassword}
+                handleChangeConfirm={handleChangeConfirm}
               />
             ) }
-
           </div>
           <ButtonContainerS>
             { view !== 'select' && (
@@ -231,9 +182,9 @@ export default function UpdateCredentials() {
                 disabled={
                   view === 'email'
                     ? emailClass !== validClass
-                    : !passwordValue
-                      || !confirmValue
-                      || confirmPasswordClass !== validClass
+                    : !password
+                      || !confirm
+                      || confirmClass !== validClass
                 }
               >
                 Atualizar

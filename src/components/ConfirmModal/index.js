@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ModalWindowS from '../../../styles/ModalWindowS';
-import ModalS from './styles';
+import ModalWindowS from '../../styles/ModalWindowS';
+import ModalS from '../../pages/Home/ClearModalContainer/styles';
 
 export default function ConfirmModal({
   openModal,
@@ -18,20 +18,14 @@ export default function ConfirmModal({
         { confirmButtons
           ? (
             <div>
-              <button type="button" onClick={handleConfirm}>
-                SIM
-              </button>
-              <button type="button" onClick={handleCancel}>
-                NÃO
-              </button>
+              <button type="button" onClick={handleConfirm}>SIM</button>
+              <button type="button" onClick={handleCancel}>NÃO</button>
             </div>
           ) : (
             <div>
-              <button type="button" onClick={handleCancel}>
-                VOLTAR
-              </button>
+              <button type="button" onClick={handleCancel}>VOLTAR</button>
             </div>
-          )}
+          ) }
       </ModalS>
     </ModalWindowS>
   ));

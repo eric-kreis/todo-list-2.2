@@ -1,4 +1,3 @@
-import { transparentize } from 'polished';
 import styled from 'styled-components';
 
 const SelectBoxS = styled.div`
@@ -11,7 +10,7 @@ const SelectBoxS = styled.div`
     background-color: transparent;
     border: 0;
     border-radius: 3px;
-    box-shadow: ${({ theme }) => transparentize(0.5, theme.colors.primary)} 0px 0px 5px 0px, ${({ theme }) => transparentize(0.5, theme.colors.primary)} 0px 0px 1px 0px;
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
     color: ${({ theme }) => theme.colors.input};
     height: 45px;
     width: 100%;
