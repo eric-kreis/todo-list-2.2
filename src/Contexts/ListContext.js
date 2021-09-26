@@ -40,7 +40,7 @@ export default function ListProvider({ children }) {
           docName: currentUser.uid,
         });
 
-        if (doc.exists) {
+        if (doc.exists()) {
           const savedData = doc.data();
           setTasks(savedData.tasks || []);
           setCheckedItems(savedData.checkedItems || []);

@@ -35,11 +35,11 @@ export default function Header({ children }) {
       </HeaderDivisionS>
       <h1>{ children }</h1>
       <HeaderDivisionS>
-        <ImageContainerS>
-          <Link to="/profile">
+        <Link to="/profile">
+          <ImageContainerS>
             { !loading && <img alt="Profile" src={image} /> }
-          </Link>
-        </ImageContainerS>
+          </ImageContainerS>
+        </Link>
         <Switch
           checked={title === 'dark'}
           onChange={handleToggleTheme}
