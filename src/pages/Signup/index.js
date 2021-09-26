@@ -16,9 +16,9 @@ import {
 } from '../../styles/auth';
 import SignupLoading from '../../assets/loadingComponents/SignupLoading';
 
-import { database } from '../../firebase';
+import { getCurrentTimestamp } from '../../firebase';
 import { saveLogin } from '../../helpers';
-import { getDoc, setDoc } from '../../helpers/database';
+import { getDocument, setDocument } from '../../helpers/database';
 import { userData, users } from '../../utils/collections';
 
 import { validClass } from '../../utils/inputClasses';
@@ -69,25 +69,25 @@ export default function Signup() {
   }, []);
 
   const createUserDocs = () => {
-    setDoc({
+    setDocument({
       collName: users,
       docName: currentUser.uid,
       data: {
         firstEmail: email,
         currentEmail: currentUser.email,
-        firstLogin: database.getCurrentTimestamp(),
+        firstLogin: getCurrentTimestamp(),
         imagePath: '/',
       },
     });
 
-    setDoc({
+    setDocument({
       collName: userData,
       docName: currentUser.uid,
       data: {
-        currentEmail: currentUser.email,
         tasks: [],
         checkedItems: [],
-        lastModification: database.getCurrentTimestamp(),
+        currentEmail: currentUser.email,
+        lastModification: getCurrentTimestamp(),
       },
     });
   };
@@ -95,7 +95,7 @@ export default function Signup() {
   if (currentUser) {
     saveLogin(email);
 
-    const doc = getDoc({
+    const doc = getDocument({
       collName: users,
       docName: currentUser.uid,
     });

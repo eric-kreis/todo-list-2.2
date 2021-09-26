@@ -10,7 +10,7 @@ import { ThemeContext } from 'styled-components';
 
 import { useAuth } from './AuthContext';
 
-import { getDoc, updateDoc } from '../helpers/database';
+import { getDocument, updateDocument } from '../helpers/database';
 import defaultImage from '../assets/default-profile.png';
 import { users } from '../utils/collections';
 import { getImgURL, sendImg } from '../helpers/storage';
@@ -39,7 +39,7 @@ export default function PhotoProvider({ children }) {
     (async () => {
       if (currentUser) {
         try {
-          const doc = await getDoc({
+          const doc = await getDocument({
             collName: users,
             docName: currentUser.uid,
           });
@@ -84,7 +84,7 @@ export default function PhotoProvider({ children }) {
       if (currentUser && !loading) {
         try {
           setError('');
-          await updateDoc({
+          await updateDocument({
             collName: users,
             docName: currentUser.uid,
             data: { imagePath: path },

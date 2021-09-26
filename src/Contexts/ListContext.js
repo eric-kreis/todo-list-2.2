@@ -6,10 +6,10 @@ import React, {
 } from 'react';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { database } from '../firebase';
+import { getCurrentTimestamp } from '../firebase';
 import { useAuth } from './AuthContext';
 
-import { getDoc, updateDoc } from '../helpers/database';
+import { getDocument, updateDocument } from '../helpers/database';
 import { userData } from '../utils/collections';
 
 const ListContext = createContext();
@@ -35,7 +35,7 @@ export default function ListProvider({ children }) {
   useEffect(() => {
     if (currentUser) {
       (async () => {
-        const doc = await getDoc({
+        const doc = await getDocument({
           collName: userData,
           docName: currentUser.uid,
         });
@@ -60,13 +60,14 @@ export default function ListProvider({ children }) {
     if (currentUser && !loading) {
       (async () => {
         setIsSaving(true);
-        await updateDoc({
+        await updateDocument({
           collName: userData,
           docName: currentUser.uid,
           data: {
             tasks,
             checkedItems,
-            lastModification: database.getCurrentTimestamp(),
+            currentEmail: currentUser.email,
+            lastModification: getCurrentTimestamp(),
           },
         });
         setIsSaving(false);

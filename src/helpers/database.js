@@ -1,13 +1,19 @@
-import { database } from '../firebase';
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  setDoc,
+} from 'firebase/firestore';
+import { db } from '../firebase';
 
-export const getDoc = ({ collName, docName }) => (
-  database[collName].doc(docName).get()
+export const getDocument = ({ collName, docName }) => (
+  getDoc(doc(db, collName, docName))
 );
 
-export const updateDoc = ({ collName, docName, data }) => (
-  database[collName].doc(docName).update({ ...data })
+export const updateDocument = ({ collName, docName, data }) => (
+  updateDoc(doc(db, collName, docName), { ...data })
 );
 
-export const setDoc = ({ collName, docName, data }) => (
-  database[collName].doc(docName).set({ ...data })
+export const setDocument = ({ collName, docName, data }) => (
+  setDoc(doc(db, collName, docName), { ...data })
 );

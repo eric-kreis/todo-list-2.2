@@ -19,7 +19,7 @@ import {
   AuthFormS,
 } from '../../styles/auth';
 
-import { updateDoc } from '../../helpers/database';
+import { updateDocument } from '../../helpers/database';
 import { userData, users } from '../../utils/collections';
 import { validClass } from '../../utils/inputClasses';
 
@@ -72,7 +72,7 @@ export default function UpdateCredentials() {
 
       setView('select');
 
-      updateDoc({
+      updateDocument({
         collName: users,
         docName: currentUser.uid,
         data: {
@@ -80,7 +80,7 @@ export default function UpdateCredentials() {
         },
       });
 
-      updateDoc({
+      updateDocument({
         collName: userData,
         docName: currentUser.uid,
         data: {
