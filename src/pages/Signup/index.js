@@ -18,7 +18,7 @@ import SignupLoading from '../../assets/loadingComponents/SignupLoading';
 
 import { getCurrentTimestamp } from '../../firebase';
 import { saveLogin } from '../../helpers';
-import { getDocument, setDocument } from '../../helpers/database';
+import { setDocument } from '../../helpers/database';
 import { userData, users } from '../../utils/collections';
 
 import { validClass } from '../../utils/inputClasses';
@@ -94,13 +94,7 @@ export default function Signup() {
 
   if (currentUser) {
     saveLogin(email);
-
-    const doc = getDocument({
-      collName: users,
-      docName: currentUser.uid,
-    });
-
-    if (!doc.exists) createUserDocs();
+    createUserDocs();
 
     return <Redirect to="/" />;
   }

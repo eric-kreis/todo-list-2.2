@@ -44,7 +44,7 @@ export default function PhotoProvider({ children }) {
             docName: currentUser.uid,
           });
 
-          if (doc.exists && doc.data().imagePath !== '/') {
+          if (doc.exists() && doc.data().imagePath !== '/') {
             const imageURL = await getImgURL({
               userId: currentUser.uid,
               imagePath: doc.data().imagePath,
@@ -91,6 +91,7 @@ export default function PhotoProvider({ children }) {
           });
         } catch (imageError) {
           setError('Falha ao salvar o enderço de sua imagem :(');
+          setImage(defaultImage);
           setPath('/');
         }
       }
@@ -128,6 +129,7 @@ export default function PhotoProvider({ children }) {
         setPath(spacelessName);
       } catch (imageError) {
         setError('Falha ao atualizar sua imagem :(');
+        setImage(defaultImage);
         setPath('/');
       }
       setLoading(false);

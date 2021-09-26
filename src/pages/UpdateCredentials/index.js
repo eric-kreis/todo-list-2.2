@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast, Flip } from 'react-toastify';
@@ -26,7 +27,7 @@ import { validClass } from '../../utils/inputClasses';
 export default function UpdateCredentials() {
   const history = useHistory();
   const { title } = useContext(ThemeContext);
-  const { updateEmail, updatePassword, currentUser } = useAuth();
+  const { emailUpdate, passwordUpdate, currentUser } = useAuth();
   const [email, emailClass, handleChangeEmail] = useEmail(currentUser.email);
   const {
     password,
@@ -41,85 +42,104 @@ export default function UpdateCredentials() {
   const [view, setView] = useState('select');
 
   // Make the toast and update user email;
-  const changeEmail = async () => {
+  const changeEmail = () => {
     if (emailClass === validClass && email !== currentUser.email) {
-      await toast.promise(
-        updateEmail(email),
+      const ifSuccess = () => {
+        updateDocument({
+          collName: users,
+          docName: currentUser.uid,
+          data: {
+            currentEmail: currentUser.email,
+          },
+        });
+        updateDocument({
+          collName: userData,
+          docName: currentUser.uid,
+          data: {
+            currentEmail: currentUser.email,
+          },
+        });
+        setView('select');
+
+        return 'Email atualizado com sucesso!';
+      };
+
+      const ifError = (error) => {
+        switch (error.code) {
+          case 'auth/requires-recent-login':
+            return 'Faça login novamente para alterar esta informação';
+          case 'auth/email-already-in-use':
+            return 'Falha ao atualizar, este email já está em uso';
+          default:
+            return 'Falha ao atualizar o email';
+        }
+      };
+
+      /*
+        modal of "react-toastify" for promises
+        https://fkhadra.github.io/react-toastify/promise;
+      */
+      toast.promise(
+        emailUpdate(email),
         {
           pending: {
             render() { return 'Alterando email...'; },
             theme: title,
           },
           success: {
-            render() { return 'Email atualizado com sucesso!'; },
+            render() { return ifSuccess(); },
             theme: title,
           },
           error: {
-            render({ data }) {
-              switch (data.code) {
-                case 'auth/requires-recent-login':
-                  return 'Faça login novamente para alterar esta informação';
-                case 'auth/email-already-in-use':
-                  return 'Falha ao atualizar, este email já está em uso';
-                default:
-                  return 'Falha ao atualizar o email';
-              }
-            },
+            render({ data }) { return ifError(data); },
             theme: title,
           },
         },
       );
-
-      setView('select');
-
-      updateDocument({
-        collName: users,
-        docName: currentUser.uid,
-        data: {
-          currentEmail: currentUser.email,
-        },
-      });
-
-      updateDocument({
-        collName: userData,
-        docName: currentUser.uid,
-        data: {
-          currentEmail: currentUser.email,
-        },
-      });
     }
   };
 
-  const changePassword = async () => {
+  const changePassword = () => {
     if (password === confirm) {
-      await toast.promise(
-        updatePassword(confirm),
+      const ifSuccess = () => {
+        setView('select');
+        resetState();
+
+        return 'Senha atualizada com sucesso!';
+      };
+
+      const ifError = (error) => {
+        switch (error.code) {
+          case 'auth/weak-password':
+            return 'Sua senha deve conter pelo menos 6 caracteres';
+          case 'auth/requires-recent-login':
+            return 'Faça login novamente para alterar esta informação';
+          default:
+            return 'Falha ao atualizar a senha';
+        }
+      };
+
+      /*
+        modal of "react-toastify" for promises
+        https://fkhadra.github.io/react-toastify/promise;
+      */
+      toast.promise(
+        passwordUpdate(confirm),
         {
           pending: {
             render() { return 'Alterando senha...'; },
             theme: title,
           },
           success: {
-            render() { return 'Senha atualizada com sucesso!'; },
+            render() { return ifSuccess(); },
             theme: title,
           },
           error: {
-            render({ data }) {
-              switch (data.code) {
-                case 'auth/weak-password':
-                  return 'Sua senha deve conter pelo menos 6 caracteres';
-                case 'auth/requires-recent-login':
-                  return 'Faça login novamente para alterar esta informação';
-                default:
-                  return 'Falha ao atualizar a senha';
-              }
-            },
+            render({ data }) { return ifError(data); },
             theme: title,
           },
         },
       );
-      setView('select');
-      resetState();
     }
   };
 
