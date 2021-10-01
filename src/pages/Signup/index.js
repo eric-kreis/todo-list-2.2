@@ -139,12 +139,7 @@ export default function Signup() {
               <SubmitButtonS
                 type="submit"
                 onClick={handleSubmit}
-                disabled={
-                  !email
-                  || !password
-                  || !confirm
-                  || !allValidated
-                }
+                disabled={!email || !password || !confirm || !allValidated}
               >
                 Cadastre-se
               </SubmitButtonS>
