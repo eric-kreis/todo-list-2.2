@@ -44,9 +44,6 @@ export default function ListProvider({ children }) {
           const savedData = doc.data();
           setTasks(savedData.tasks || []);
           setCheckedItems(savedData.checkedItems || []);
-        } else {
-          setTasks([]);
-          setCheckedItems([]);
         }
         setLoading(false);
       })();

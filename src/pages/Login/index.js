@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import { useAuth } from '../../Contexts/AuthContext';
+
 import EmailInput from '../../components/EmailInput';
 import PasswordInput from '../../components/PasswordInput';
 import {
@@ -13,8 +14,8 @@ import {
 } from '../../styles/auth';
 import AuthHeader from '../../components/AuthHeader';
 import LoginLoading from '../../assets/loadingComponents/LoginLoading';
-import { saveLogin } from '../../helpers';
 
+import { saveLogin } from '../../helpers';
 import { validClass } from '../../utils/inputClasses';
 import { useEmail, usePassword } from '../../hooks';
 

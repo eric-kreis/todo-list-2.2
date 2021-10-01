@@ -76,7 +76,6 @@ export default function Signup() {
         firstEmail: email,
         currentEmail: currentUser.email,
         firstLogin: getCurrentTimestamp(),
-        imagePath: '/',
       },
     });
 
