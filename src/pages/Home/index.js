@@ -10,7 +10,7 @@ import Footer from '../../components/Footer';
 import { HomeMainS, HomeSectionS } from './styles';
 import SideBar from '../../components/SideBar';
 
-export default function HomePage() {
+export default function Home() {
   const [clearModal, setClearModal] = useState(false);
 
   const handleToggleModal = () => setClearModal((prevClear) => !prevClear);

@@ -1,5 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { Link } from 'react-router-dom';
 
 import { useDoublePass, useEmail } from '../../hooks';
 import { useAuth } from '../../Contexts/AuthContext';
@@ -16,15 +20,10 @@ import {
 } from '../../styles/auth';
 import SignupLoading from '../../assets/loadingComponents/SignupLoading';
 
-import { getCurrentTimestamp } from '../../firebase';
-import { saveLogin } from '../../helpers';
-import { setDocument } from '../../helpers/database';
-import { userData, users } from '../../utils/collections';
-
 import { validClass } from '../../utils/inputClasses';
 
 export default function Signup() {
-  const { signUp, currentUser } = useAuth();
+  const { signUp } = useAuth();
   const [email, emailClass, handleChangeEmail] = useEmail();
   const {
     password,
@@ -68,35 +67,6 @@ export default function Signup() {
     document.title = 'Cadastre-se';
   }, []);
 
-  const createUserDocs = () => {
-    setDocument({
-      collName: users,
-      docName: currentUser.uid,
-      data: {
-        firstEmail: email,
-        currentEmail: currentUser.email,
-        firstLogin: getCurrentTimestamp(),
-      },
-    });
-
-    setDocument({
-      collName: userData,
-      docName: currentUser.uid,
-      data: {
-        tasks: [],
-        checkedItems: [],
-        currentEmail: currentUser.email,
-        lastModification: getCurrentTimestamp(),
-      },
-    });
-  };
-
-  if (currentUser) {
-    saveLogin(email);
-    createUserDocs();
-
-    return <Redirect to="/" />;
-  }
   return (
     <AuthBodyS>
       <AuthContainerS>

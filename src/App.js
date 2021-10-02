@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import GlobalStyle from './styles/global';
-import Routes from './Routes';
+import Routes from './routes';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
