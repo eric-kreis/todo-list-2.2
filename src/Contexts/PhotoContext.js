@@ -82,6 +82,8 @@ export default function PhotoProvider({ children }) {
               render: 'Ocorreu um erro ao enviar sua imagem :(',
               type: 'error',
               isLoading: false,
+              draggable: true,
+              autoClose: 5000,
             },
           );
         },
@@ -95,6 +97,8 @@ export default function PhotoProvider({ children }) {
               render: 'Foto atualizada :)',
               type: 'success',
               isLoading: false,
+              draggable: true,
+              autoClose: 3000,
             },
           );
         },
