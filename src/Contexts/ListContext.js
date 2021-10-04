@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { getCurrentTimestamp } from '../firebase';
 import { useAuth } from './AuthContext';
 
-import { getDocument, updateDocument } from '../helpers/database';
+import { createUserDocs, getDocument, updateDocument } from '../helpers/database';
 import { userData } from '../utils/collections';
 
 const ListContext = createContext();
@@ -44,7 +44,10 @@ export default function ListProvider({ children }) {
           const savedData = doc.data();
           setTasks(savedData.tasks || []);
           setCheckedItems(savedData.checkedItems || []);
+        } else {
+          createUserDocs(currentUser);
         }
+
         setLoading(false);
       })();
     } else {

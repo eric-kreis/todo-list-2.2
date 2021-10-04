@@ -1,15 +1,19 @@
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { storage } from '../firebase';
+import { getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import storageRef from '../utils/storageRef';
 
 export const getImgURL = ({ userId, imagePath }) => (
-  getDownloadURL(ref(storage, `images/${userId}/${imagePath}`))
+  getDownloadURL(storageRef(userId, imagePath))
 );
 
-export const sendImg = ({ userId, customImg, name }) => {
+export const sendImg = ({ userId, customImg, imagePath }) => {
   const metaData = {
     contentType: customImg.type,
-    name: customImg.name,
+    imagePath: customImg.name,
   };
-  const storageRef = ref(storage, `images/${userId}/${name}`);
-  return uploadBytes(storageRef, customImg, metaData);
+
+  return uploadBytesResumable(
+    storageRef(userId, imagePath),
+    customImg,
+    metaData,
+  );
 };

@@ -7,11 +7,13 @@ import React, {
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
+import { getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useAuth } from './AuthContext';
 
 import { updatePhoto } from '../helpers/auth';
-import { getImgURL, sendImg } from '../helpers/storage';
+import { sendImg } from '../helpers/storage';
 
 import defaultImage from '../assets/default-profile.png';
 
@@ -58,44 +60,45 @@ export default function PhotoProvider({ children }) {
       setLoading(true);
       const spacelessName = customImg.name.split(' ').join('');
 
-      try {
-        await sendImg({
-          userId: currentUser.uid,
-          customImg,
-          name: spacelessName,
-        });
+      const toastId = uuidv4();
 
-        toast.promise(
-          getImgURL({
-            userId: currentUser.uid,
-            imagePath: spacelessName,
-          }),
-          {
-            pending: {
-              render() { return 'Processando...'; },
-              theme: title,
+      const uploadTask = sendImg({
+        userId: currentUser.uid,
+        customImg,
+        imagePath: spacelessName,
+      });
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          if (snapshot.state === 'running') {
+            toast.loading('Processando...', { toastId });
+          }
+        },
+        () => {
+          toast.update(
+            toastId,
+            {
+              render: 'Ocorreu um erro ao enviar sua imagem :(',
+              type: 'error',
+              isLoading: false,
             },
-            success: {
-              render({ data }) {
-                setLoading(false);
-                setImage(data);
-                return 'Foto enviada!';
-              },
-              theme: title,
+          );
+        },
+        async () => {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          setImage(url);
+          setLoading(false);
+          toast.update(
+            toastId,
+            {
+              render: 'Foto atualizada :)',
+              type: 'success',
+              isLoading: false,
             },
-            error: {
-              render() {
-                return 'Ocorreu um erro ao receber sua imagem :(';
-              },
-              theme: title,
-            },
-          },
-        );
-      } catch (e) {
-        toast.error('Falha ao enviar sua imagem :(');
-        setImage(defaultImage);
-        setLoading(false);
-      }
+          );
+        },
+      );
     }
   };
 
