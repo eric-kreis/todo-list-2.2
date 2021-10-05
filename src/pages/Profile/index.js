@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast, Flip } from 'react-toastify';
-import { ThemeContext } from 'styled-components';
+import { ToastContainer, Flip } from 'react-toastify';
 
 import { useAuth } from '../../Contexts/AuthContext';
 import { usePhoto } from '../../Contexts/PhotoContext';
@@ -21,11 +20,9 @@ export default function Profile() {
   const { logout } = useAuth();
   const {
     image,
-    error,
     handleUpload,
     handleDelete,
   } = usePhoto();
-  const { title } = useContext(ThemeContext);
 
   const [pets, setPets] = useState('');
   const [openDefaultModal, setOpenDefaultModal] = useState('');
@@ -66,9 +63,9 @@ export default function Profile() {
   };
 
   const handleChangeImg = () => {
-    setOpenDefaultModal('');
     if (openDefaultModal === 'send') handleUpload(customImg);
     if (openDefaultModal === 'delete') handleDelete();
+    setOpenDefaultModal('');
   };
 
   const handleDefaultReturn = () => {
@@ -81,13 +78,6 @@ export default function Profile() {
     }
     setOpenDefaultModal('');
   };
-
-  if (error) {
-    toast.error(error, {
-      theme: title,
-      toastId: 'error-toast',
-    });
-  }
 
   useEffect(() => {
     document.title = 'Perfil';

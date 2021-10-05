@@ -24,20 +24,13 @@ export default function FormContainer({ handleToggleModal }) {
     isSaving,
   } = useList();
 
-  const handleAddItem = (text) => addToDo(text);
-  const handleDisplayTasks = (e) => changeDisplay(e);
-
-  const [taskText, setTaskText] = useState('');
+  const [task, setTask] = useState('');
   const [formInputClass, setInputClass] = useState(validClass);
   const [formFocus, setFormFocus] = useState(false);
 
-  const handleChange = ({ target: { value } }) => {
-    setTaskText(value);
-  };
+  const handleChange = ({ target: { value } }) => setTask(value);
 
-  const handleToggleFocus = (bool = true) => {
-    setFormFocus(bool);
-  };
+  const handleToggleFocus = (bool = true) => setFormFocus(bool);
 
   const handleToggleFormClass = ({ target: { value } }) => {
     if (!value.trim()) {
@@ -52,11 +45,11 @@ export default function FormContainer({ handleToggleModal }) {
   };
 
   const addTaskRule = () => {
-    if (!taskText.trim()) {
+    if (!task.trim()) {
       setInputClass(invalidClass);
     } else {
-      handleAddItem(taskText);
-      setTaskText('');
+      addToDo(task);
+      setTask('');
     }
     handleToggleFocus();
   };
@@ -66,13 +59,11 @@ export default function FormContainer({ handleToggleModal }) {
       <StatusSectionS isSaving={isSaving}>
         <img src={loader} alt="loading" />
         <Check className="check-icon" />
-        <span>
-          { isSaving ? 'Salvando...' : 'Alterações salvas' }
-        </span>
+        <span>{ isSaving ? 'Salvando...' : 'Alterações salvas' }</span>
       </StatusSectionS>
       <SectionFormS>
         <FormInput
-          taskText={taskText}
+          task={task}
           formInputClass={formInputClass}
           formFocus={formFocus}
           handleChange={handleChange}
@@ -80,40 +71,21 @@ export default function FormContainer({ handleToggleModal }) {
           handleToggleFocus={handleToggleFocus}
           handleResetFormClass={handleResetFormClass}
         />
-        <IconButtonS add large onClick={addTaskRule}>
+        <IconButtonS type="submit" add large onClick={addTaskRule}>
           <Add title="Adicionar tarefa" />
         </IconButtonS>
-        <IconButtonS
-          clear
-          large
-          onClick={() => {
-            handleToggleModal('clear');
-          }}
-          data-testid="clear-btn"
-        >
+        <IconButtonS clear large onClick={() => handleToggleModal('clear')}>
           <Trash title="Remover Tarefas" />
         </IconButtonS>
       </SectionFormS>
       <SectionFormS>
-        <FormShowButtonS
-          value="all"
-          onClick={handleDisplayTasks}
-          display={display}
-        >
+        <FormShowButtonS value="all" onClick={changeDisplay} display={display}>
           Todas
         </FormShowButtonS>
-        <FormShowButtonS
-          value="toDo"
-          onClick={handleDisplayTasks}
-          display={display}
-        >
+        <FormShowButtonS value="toDo" onClick={changeDisplay} display={display}>
           Pendentes
         </FormShowButtonS>
-        <FormShowButtonS
-          value="completed"
-          onClick={handleDisplayTasks}
-          display={display}
-        >
+        <FormShowButtonS value="completed" onClick={changeDisplay} display={display}>
           Concluídas
         </FormShowButtonS>
       </SectionFormS>

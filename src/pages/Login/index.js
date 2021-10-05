@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../Contexts/AuthContext';
+
 import EmailInput from '../../components/EmailInput';
 import PasswordInput from '../../components/PasswordInput';
 import {
@@ -13,13 +14,12 @@ import {
 } from '../../styles/auth';
 import AuthHeader from '../../components/AuthHeader';
 import LoginLoading from '../../assets/loadingComponents/LoginLoading';
-import { saveLogin } from '../../helpers';
 
 import { validClass } from '../../utils/inputClasses';
 import { useEmail, usePassword } from '../../hooks';
 
 export default function Login() {
-  const { login, currentUser } = useAuth();
+  const { login } = useAuth();
 
   const [email, emailClass, handleChangeEmail] = useEmail();
   const [password, passwordClass, handleChangePassword] = usePassword();
@@ -59,11 +59,6 @@ export default function Login() {
   useEffect(() => {
     document.title = 'Entrar';
   }, []);
-
-  if (currentUser) {
-    saveLogin(email);
-    return <Redirect to="/" />;
-  }
 
   return (
     <AuthBodyS>

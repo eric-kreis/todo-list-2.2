@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function FormInput({
   formInputClass,
   formFocus,
-  taskText,
+  task,
   handleChange,
   handleToggleFormClass,
   handleToggleFocus,
@@ -30,17 +30,10 @@ export default function FormInput({
         ref={input}
         id="form-input"
         type="text"
-        name="taskText"
-        value={taskText}
+        value={task}
         onFocus={handleToggleFocus}
-        onBlur={() => {
-          handleToggleFocus(false);
-          handleResetFormClass();
-        }}
-        onChange={(e) => {
-          handleChange(e);
-          handleToggleFormClass(e);
-        }}
+        onBlur={() => { handleToggleFocus(false); handleResetFormClass(); }}
+        onChange={(e) => { handleChange(e); handleToggleFormClass(e); }}
         placeholder=" "
         autoComplete="off"
         maxLength={120}
@@ -53,8 +46,10 @@ export default function FormInput({
 FormInput.propTypes = {
   formInputClass: PropTypes.string.isRequired,
   formFocus: PropTypes.oneOfType([
-    PropTypes.object, PropTypes.bool]).isRequired,
-  taskText: PropTypes.string.isRequired,
+    PropTypes.object,
+    PropTypes.bool,
+  ]).isRequired,
+  task: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleToggleFormClass: PropTypes.func.isRequired,
   handleToggleFocus: PropTypes.func.isRequired,

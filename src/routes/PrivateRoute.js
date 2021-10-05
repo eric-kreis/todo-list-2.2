@@ -2,14 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
-import { useAuth } from './Contexts/AuthContext';
+import { useAuth } from '../Contexts/AuthContext';
 
-export default function PrivateRoute({ component: Component, ...rest }) {
+export default function PrivateRoute({ component: Component, path }) {
   const { currentUser } = useAuth();
 
   return (
     <Route
-      {...rest}
+      path={path}
       render={(props) => (
         currentUser
           ? <Component {...props} />
@@ -21,4 +21,5 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 
 PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired,
+  path: PropTypes.string.isRequired,
 };

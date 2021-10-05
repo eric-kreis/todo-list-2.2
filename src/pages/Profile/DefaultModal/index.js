@@ -27,8 +27,12 @@ export default function DefaultModal({
   );
 }
 
+DefaultModal.defaultProps = {
+  imageSrc: '',
+};
+
 DefaultModal.propTypes = {
-  imageSrc: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleReturn: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,

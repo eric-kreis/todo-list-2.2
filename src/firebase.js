@@ -1,9 +1,8 @@
-import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, serverTimestamp } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 
 const config = {
@@ -15,14 +14,14 @@ const config = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-const app = firebase.initializeApp(config);
+const app = initializeApp(config);
 
 export const auth = getAuth(app);
 
 export const db = getFirestore(app);
 
-export const getCurrentTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+export const getCurrentTimestamp = serverTimestamp;
 
-export const storage = firebase.storage();
+export const storage = getStorage(app);
 
 export default app;
