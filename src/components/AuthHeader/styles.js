@@ -12,7 +12,7 @@ const AuthHeaderS = styled.header`
   }
 
   h4 {
-    margin: 24px 0 18px;
+    margin: 8px 0 12px;
   }
 `;
 

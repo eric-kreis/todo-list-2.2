@@ -13,6 +13,7 @@ import {
   SubmitButtonS,
 } from '../../styles/auth';
 import AuthHeader from '../../components/AuthHeader';
+import ProviderSection from '../../components/ProviderSection';
 import LoginLoading from '../../assets/loadingComponents/LoginLoading';
 
 import { validClass } from '../../utils/inputClasses';
@@ -93,6 +94,7 @@ export default function Login() {
               >
                 Entrar
               </SubmitButtonS>
+              <ProviderSection setError={setError} />
               <LinkContainerS>
                 <Link to="/reset-password">Esqueceu a senha?</Link>
                 <p>

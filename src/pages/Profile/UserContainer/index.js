@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 
 import {
   FileUpload,
   Gallery,
-  Gear,
   Trash,
 } from '../../../assets/icons';
 import UserContainerS, {
@@ -19,7 +17,6 @@ import { usePhoto } from '../../../Contexts/PhotoContext';
 
 export default function UserContainer({ handleChangeFile, setOpenDefaultModal, setOpenPetModal }) {
   const { image, loading } = usePhoto();
-  const history = useHistory();
 
   return (
     <UserContainerS>
@@ -38,14 +35,6 @@ export default function UserContainer({ handleChangeFile, setOpenDefaultModal, s
         </FileLabelS>
         <UserButtonS
           type="button"
-          onClick={() => setOpenDefaultModal('delete')}
-          title="Excluir foto"
-          deleteBtn
-        >
-          <Trash />
-        </UserButtonS>
-        <UserButtonS
-          type="button"
           onClick={() => setOpenPetModal(true)}
           title="Abrir galeria"
           gallery
@@ -54,10 +43,11 @@ export default function UserContainer({ handleChangeFile, setOpenDefaultModal, s
         </UserButtonS>
         <UserButtonS
           type="button"
-          onClick={() => history.push('/update-credentials')}
-          title="Alterar credenciais"
+          onClick={() => setOpenDefaultModal('delete')}
+          title="Excluir foto"
+          deleteBtn
         >
-          <Gear />
+          <Trash />
         </UserButtonS>
       </ButtonContainerS>
     </UserContainerS>

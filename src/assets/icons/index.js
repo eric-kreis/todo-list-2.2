@@ -15,7 +15,12 @@ import {
 } from 'react-icons/io5';
 import { MdModeEdit } from 'react-icons/md';
 import { HiSun, HiMoon } from 'react-icons/hi';
-import { SiLinkedin, SiGithub } from 'react-icons/si';
+import {
+  SiLinkedin,
+  SiGithub,
+  SiGoogle,
+  SiFacebook,
+} from 'react-icons/si';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FaUser, FaDog, FaCat } from 'react-icons/fa';
@@ -39,6 +44,10 @@ export const Moon = HiMoon;
 export const LinkedIn = SiLinkedin;
 
 export const GitHub = SiGithub;
+
+export const Google = SiGoogle;
+
+export const Facebook = SiFacebook;
 
 export const ColorPalette = IoColorPalette;
 

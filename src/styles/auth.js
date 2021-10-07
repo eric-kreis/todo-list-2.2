@@ -91,7 +91,7 @@ export const AuthFormS = styled.form`
 export const SubmitButtonS = styled.button`
   background-color: ${({ theme }) => theme.colors.primary};
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 3px;
   color: ${({ theme }) => theme.colors.text};
   margin-top: 32px;
   padding: 8px 0;
@@ -107,7 +107,7 @@ export const SubmitButtonS = styled.button`
 `;
 
 export const LinkContainerS = styled.section`
-  padding: ${({ signup }) => (signup ? '34px' : '32px')};
+  padding: ${({ signup }) => (signup ? '20px' : '18px')};
 
   p {
     margin: ${({ update }) => (update ? '16px' : '8px')} 0 0 0;

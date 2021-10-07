@@ -9,7 +9,11 @@ import {
   signOut,
   updateEmail,
   updatePassword,
+  signInWithPopup,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  FacebookAuthProvider,
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -25,6 +29,17 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const signInWithProvider = async (providerName) => {
+    const providers = {
+      google: new GoogleAuthProvider(),
+      facebook: new FacebookAuthProvider(),
+      github: new GithubAuthProvider(),
+    };
+
+    const provider = providers[providerName];
+    return signInWithPopup(auth, provider);
+  };
 
   const signUp = (email, password) => (
     createUserWithEmailAndPassword(auth, email, password));
@@ -50,12 +65,14 @@ export default function AuthProvider({ children }) {
 
   const contextValue = {
     currentUser,
-    signUp,
     login,
     logout,
+    signUp,
     emailUpdate,
     resetPassword,
     passwordUpdate,
+    setCurrentUser,
+    signInWithProvider,
   };
 
   return (

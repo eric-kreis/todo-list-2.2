@@ -4,9 +4,8 @@ const UserContainerS = styled.div`
   align-items: center;
   border-radius: 3px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin: 0 auto 20px;
-  padding: 0 16px;
   width: 100%;
 `;
 
@@ -16,10 +15,9 @@ export const PhotoContainerS = styled.section`
   border-radius: 50%;
   display: flex;
   justify-content: center;
-  height: 100px;
-  margin: 0 16px 0 16px;
+  height: 120px;
   overflow: hidden;
-  width: 100px;
+  width: 120px;
 
   img {
     height: 100%;
@@ -32,8 +30,7 @@ export const ButtonContainerS = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  height: 80px;
-  width: 80px;
+  width: 125px;
 
   input {
     opacity: 0;
@@ -52,7 +49,7 @@ export const UserButtonS = styled.button`
   justify-content: center;
 
   * {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   :hover {
@@ -78,7 +75,7 @@ export const FileLabelS = styled.label`
   justify-content: center;
 
   * {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   :hover {

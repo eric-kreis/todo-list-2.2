@@ -9,7 +9,6 @@ import * as Pages from '../pages';
 export default function Routes() {
   return (
     <Switch>
-      <PrivateRoute path="/update-credentials" component={Pages.UpdateCredentials} />
       <PublicRoute path="/reset-password" component={Pages.PasswordReset} />
       <PublicRoute path="/register" component={Pages.Signup} />
       <PrivateRoute path="/profile" component={Pages.Profile} />

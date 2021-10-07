@@ -4,25 +4,25 @@ import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import { ThemeContext } from 'styled-components';
 
-import { useAuth } from '../../Contexts/AuthContext';
-import { useDoublePass, useEmail } from '../../hooks';
+import { useAuth } from '../../../Contexts/AuthContext';
+import { useDoublePass, useEmail } from '../../../hooks';
 
 import PasswordBox from './PasswordBox';
 import SelectBox from './SelectBox';
 import ButtonContainerS from './styles';
 
-import AuthHeader from '../../components/AuthHeader';
-import EmailInput from '../../components/EmailInput';
+import AuthHeader from '../../../components/AuthHeader';
+import EmailInput from '../../../components/EmailInput';
 
 import {
   AuthBodyS,
   AuthContainerS,
   AuthFormS,
-} from '../../styles/auth';
+} from '../../../styles/auth';
 
-import { updateDocument } from '../../helpers/database';
-import { userData, users } from '../../utils/collections';
-import { validClass } from '../../utils/inputClasses';
+import { updateDocument } from '../../../helpers/database';
+import { userData, users } from '../../../utils/collections';
+import { validClass } from '../../../utils/inputClasses';
 
 export default function UpdateCredentials() {
   const history = useHistory();

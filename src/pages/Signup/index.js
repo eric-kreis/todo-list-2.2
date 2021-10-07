@@ -21,6 +21,7 @@ import {
 import SignupLoading from '../../assets/loadingComponents/SignupLoading';
 
 import { validClass } from '../../utils/inputClasses';
+import ProviderSection from '../../components/ProviderSection';
 
 export default function Signup() {
   const { signUp } = useAuth();
@@ -47,8 +48,8 @@ export default function Signup() {
       setLoading(true);
       setError('');
       await signUp(email, password);
-    } catch (signError) {
-      switch (signError.code) {
+    } catch (e) {
+      switch (e.code) {
         case 'auth/email-already-in-use':
           setError('* O e-mail fornecido já está em uso');
           break;
@@ -113,6 +114,7 @@ export default function Signup() {
               >
                 Cadastre-se
               </SubmitButtonS>
+              <ProviderSection setError={setError} />
               <LinkContainerS signup>
                 {'Já tem uma conta? '}
                 <Link to="/login">Entrar</Link>
