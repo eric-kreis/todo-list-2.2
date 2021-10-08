@@ -12,7 +12,7 @@ const ProviderButtonS = styled.button`
   border: 0;
   border-radius: 3px;
   padding: 5px 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: whitesmoke;
   cursor: pointer;
   width: 32%;
 
