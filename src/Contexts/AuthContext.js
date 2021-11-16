@@ -13,7 +13,6 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   GithubAuthProvider,
-  FacebookAuthProvider,
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -33,7 +32,6 @@ export default function AuthProvider({ children }) {
   const signInWithProvider = async (providerName) => {
     const providers = {
       google: new GoogleAuthProvider(),
-      facebook: new FacebookAuthProvider(),
       github: new GithubAuthProvider(),
     };
 
@@ -42,10 +40,12 @@ export default function AuthProvider({ children }) {
   };
 
   const signUp = (email, password) => (
-    createUserWithEmailAndPassword(auth, email, password));
+    createUserWithEmailAndPassword(auth, email, password)
+  );
 
   const login = (email, password) => (
-    signInWithEmailAndPassword(auth, email, password));
+    signInWithEmailAndPassword(auth, email, password)
+  );
 
   const logout = () => signOut(auth);
 

@@ -31,7 +31,6 @@ export default function ProviderSection({ setError }) {
 
   return (
     <ProviderSectionS>
-      <ProviderButton name="facebook" onClick={handleSignIn} />
       <ProviderButton name="google" onClick={handleSignIn} />
       <ProviderButton name="github" onClick={handleSignIn} />
     </ProviderSectionS>

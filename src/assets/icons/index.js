@@ -19,7 +19,7 @@ import {
   SiLinkedin,
   SiGithub,
   SiGoogle,
-  SiFacebook,
+  // SiFacebook,
 } from 'react-icons/si';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -47,7 +47,7 @@ export const GitHub = SiGithub;
 
 export const Google = SiGoogle;
 
-export const Facebook = SiFacebook;
+// export const Facebook = SiFacebook;
 
 export const ColorPalette = IoColorPalette;
 

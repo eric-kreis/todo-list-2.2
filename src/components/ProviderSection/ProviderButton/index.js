@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProviderButtonS from './styles';
-import { Facebook, GitHub, Google } from '../../../assets/icons';
+import { GitHub, Google } from '../../../assets/icons';
 
 const providerIcons = {
   google: <Google />,
-  facebook: <Facebook />,
   github: <GitHub />,
 };
 
